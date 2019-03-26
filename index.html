@@ -156,6 +156,10 @@
         }
     </style>
 
+
+
+
+
     <div class="uk-scope">
         <div class="uk-grid-collapse uk-child-width-expand@m" uk-grid>
             <!-- Grid Section with standard padding added, main input content -->
@@ -194,6 +198,13 @@
                             </div>
                         </div>
                     </div>
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="situationBox">Describe the situation.</label>
+                        <div class="uk-form-controls uk-flex">
+                            <input class="uk-input" type="text" id="situationBox"
+                                placeholder="Describe the situation."></input>
+                        </div>
+                    </div>
 
 
                     <div class="uk-child-width-expand@s uk-margin-remove-top" uk-grid>
@@ -201,25 +212,25 @@
                             <h4>Call Topic(s)</h4>
                             <ul class="uk-list uk-list-large uk-list-default">
                                 <div class="uk-alert-success" uk-alert>
-                                    <li><label><input class="uk-checkbox white-check" type="checkbox" id="Domains"
+                                    <li><label><input class="uk-checkbox" type="checkbox" id="Domains"
                                                 name="productsCalledAbout">
                                             Domains </label></li>
-                                    <li><label><input class="uk-checkbox white-check" type="checkbox" id="Hosting"
+                                    <li><label><input class="uk-checkbox" type="checkbox" id="Hosting"
                                                 name="productsCalledAbout">
                                             Hosting </label></li>
-                                    <li><label><input class="uk-checkbox white-check" type="checkbox" id="Email"
+                                    <li><label><input class="uk-checkbox" type="checkbox" id="Email"
                                                 name="productsCalledAbout">
                                             Email </label></li>
-                                    <li><label><input class="uk-checkbox white-check" type="checkbox" id="Websites"
+                                    <li><label><input class="uk-checkbox" type="checkbox" id="Websites"
                                                 name="productsCalledAbout">
                                             Websites </label></li>
-                                    <li><label><input class="uk-checkbox white-check" type="checkbox" id="Security"
+                                    <li><label><input class="uk-checkbox" type="checkbox" id="Security"
                                                 name="productsCalledAbout">
                                             Security </label></li>
-                                    <li><label><input class="uk-checkbox white-check" type="checkbox" id="BusinessTools"
+                                    <li><label><input class="uk-checkbox" type="checkbox" id="BusinessTools"
                                                 name="productsCalledAbout">
                                             Business Tools </label></li>
-                                    <li><label><input class="uk-checkbox white-check" type="checkbox" id="Other"
+                                    <li><label><input class="uk-checkbox" type="checkbox" id="Other"
                                                 name="productsCalledAbout">
                                             Other (Leave a comment below) </label></li>
                                 </div>
@@ -227,46 +238,35 @@
                         </div>
                     </div>
 
-                    <div class="uk-child-width-expand@s uk-margin-remove-top" uk-grid>
 
-                        <div class="uk-margin">
-                            <label class="uk-form-label" for="situationBox">Describe the situation.</label>
-                            <div class="uk-form-controls uk-flex">
-                                <input class="uk-input" type="text" id="situationBox"
-                                    placeholder="Describe the situation."></input>
-                            </div>
-                        </div>
 
+                    <div class="uk-margin-remove-top" uk-grid>
                         <div class="uk-margin">
-                            <div class="uk-alert-warning uk-margin-left uk-flex-inline" uk-alert>
-                                <h4 class="uk-margin-remove-bottom">Issue was resolved?</h4>
-                                <li class="tg-list-item uk-margin-remove-right">
-                                    <input class="tgl tgl-flip" id="resolvedCheckbox" type="checkbox" />
-                                    <label class="tgl-btn uk-margin-remove-bottom uk-margin-remove-right"
-                                        data-tg-off="Nope" data-tg-on="Yes" for="resolvedCheckbox"></label>
-                                </li>
-                            </div>
-                        </div>
-
-                        <div class="uk-margin">
-                            <div class="uk-alert-warning uk-margin-left uk-flex-inline" uk-alert>
-                                <h4 class="uk-margin-remove-bottom">Inquiry Out Of Scope?</h4>
-                                <li class="tg-list-item uk-margin-remove-right">
-                                    <input class="tgl tgl-flip" id="scopeCheckbox" type="checkbox" />
-                                    <label class="tgl-btn uk-margin-remove-bottom uk-margin-remove-right"
-                                        data-tg-off="Nope" data-tg-on="Yes" for="scopeCheckbox"></label>
-                                </li>
-                            </div>
-                        </div>
-
-                        <div class="uk-margin">
-                            <div class="uk-alert-warning uk-margin-left uk-flex-inline" uk-alert>
-                                <h4 class="uk-margin-remove-bottom">Ticket Created After Transfer?</h4>
-                                <li class="tg-list-item uk-margin-remove-right">
-                                    <input class="tgl tgl-flip" id="ticketCheckbox" type="checkbox" />
-                                    <label class="tgl-btn uk-margin-remove-bottom uk-margin-remove-right"
-                                        data-tg-off="Nope" data-tg-on="Yes" for="ticketCheckbox"></label>
-                                </li>
+                            <div class="uk-alert-warning" uk-alert>
+                                <div class="uk-flex">
+                                    <h4>Issue Was Resolved?</h4>
+                                    <li class="tg-list-item uk-margin-remove-right">
+                                        <input class="tgl tgl-flip" id="resolvedCheckbox" type="checkbox" />
+                                        <label class="tgl-btn uk-margin-remove-bottom uk-margin-remove-right"
+                                            data-tg-off="Nope" data-tg-on="Yes" for="resolvedCheckbox"></label>
+                                    </li>
+                                </div>
+                                <div class="uk-flex">
+                                    <h4>Inquiry Out Of Scope?</h4>
+                                    <li class="tg-list-item uk-margin-remove-right">
+                                        <input class="tgl tgl-flip" id="scopeCheckbox" type="checkbox" />
+                                        <label class="tgl-btn uk-margin-remove-bottom uk-margin-remove-right"
+                                            data-tg-off="Nope" data-tg-on="Yes" for="scopeCheckbox"></label>
+                                    </li>
+                                </div>
+                                <div class="uk-flex">
+                                    <h4 class="uk-margin-remove-bottom">Escalation Created For Caller?</h4>
+                                    <li class="tg-list-item uk-margin-remove-right">
+                                        <input class="tgl tgl-flip" id="ticketCheckbox" type="checkbox" />
+                                        <label class="tgl-btn uk-margin-remove-bottom uk-margin-remove-right"
+                                            data-tg-off="Nope" data-tg-on="Yes" for="ticketCheckbox"></label>
+                                    </li>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -276,9 +276,6 @@
                     <button id="resetButton" class="uk-button uk-button-default">Reset / Clear</button>
                     <button id="SubmitSlack" class="uk-button uk-button-danger" disabled="disabled">Submit To
                         Slack</button>
-                    <div class="uk-alert-warning uk-margin-left uk-flex-inline" uk-alert>
-
-                    </div>
                 </div>
             </div>
             <!-- Parse and reset buttons need to be outside of form -->
@@ -295,9 +292,10 @@
                 <li>All Done!</li>
             </ul>
         </div>
-
-
     </div>
+
+
+
     <script type="text/javascript" src="./index.js"></script>
 </body>
 
