@@ -1,10 +1,239 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="UTF-8">
-    <title>title</title>
-  </head>
-  <body>
-  
-  </body>
+    <title>Tier 3 Pro Tracker</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.5/js/uikit.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.5/js/uikit-icons.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/1.0.8/purify.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="./index.js"></script>
+</head>
+
+<body>
+    <style>
+        .white-check {
+            background-color: white !important;
+        }
+
+        .tg-list {
+            text-align: center;
+            display: flex;
+            align-items: center;
+        }
+
+        .tg-list-item {
+            margin: 0 2em;
+        }
+
+        .tgl {
+            display: none;
+        }
+
+        .tgl,
+        .tgl:after,
+        .tgl:before,
+        .tgl *,
+        .tgl *:after,
+        .tgl *:before,
+        .tgl+.tgl-btn {
+            box-sizing: border-box;
+        }
+
+        .tgl::-moz-selection,
+        .tgl:after::-moz-selection,
+        .tgl:before::-moz-selection,
+        .tgl *::-moz-selection,
+        .tgl *:after::-moz-selection,
+        .tgl *:before::-moz-selection,
+        .tgl+.tgl-btn::-moz-selection {
+            background: none;
+        }
+
+        .tgl::selection,
+        .tgl:after::selection,
+        .tgl:before::selection,
+        .tgl *::selection,
+        .tgl *:after::selection,
+        .tgl *:before::selection,
+        .tgl+.tgl-btn::selection {
+            background: none;
+        }
+
+        .tgl+.tgl-btn {
+            outline: 0;
+            display: block;
+            width: 4em;
+            height: 2em;
+            position: relative;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .tgl+.tgl-btn:after,
+        .tgl+.tgl-btn:before {
+            position: relative;
+            display: block;
+            content: "";
+            width: 50%;
+            height: 100%;
+        }
+
+        .tgl+.tgl-btn:after {
+            left: 0;
+        }
+
+        .tgl+.tgl-btn:before {
+            display: none;
+        }
+
+        .tgl:checked+.tgl-btn:after {
+            left: 50%;
+        }
+
+        .tgl-flip+.tgl-btn {
+            padding: 2px;
+            transition: all .2s ease;
+            font-family: sans-serif;
+            -webkit-perspective: 100px;
+            perspective: 100px;
+        }
+
+        .tgl-flip+.tgl-btn:after,
+        .tgl-flip+.tgl-btn:before {
+            display: inline-block;
+            transition: all .4s ease;
+            width: 100%;
+            text-align: center;
+            position: absolute;
+            line-height: 2em;
+            font-weight: bold;
+            color: #fff;
+            position: absolute;
+            top: 0;
+            left: 0;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 4px;
+        }
+
+        .tgl-flip+.tgl-btn:after {
+            content: attr(data-tg-on);
+            background: #02C66F;
+            -webkit-transform: rotateY(-180deg);
+            transform: rotateY(-180deg);
+        }
+
+        .tgl-flip+.tgl-btn:before {
+            background: #FF3A19;
+            content: attr(data-tg-off);
+        }
+
+        .tgl-flip+.tgl-btn:active:before {
+            -webkit-transform: rotateY(-20deg);
+            transform: rotateY(-20deg);
+        }
+
+        .tgl-flip:checked+.tgl-btn:before {
+            -webkit-transform: rotateY(180deg);
+            transform: rotateY(180deg);
+        }
+
+        .tgl-flip:checked+.tgl-btn:after {
+            -webkit-transform: rotateY(0);
+            transform: rotateY(0);
+            left: 0;
+            background: #7FC6A6;
+        }
+
+        .tgl-flip:checked+.tgl-btn:active:after {
+            -webkit-transform: rotateY(20deg);
+            transform: rotateY(20deg);
+        }
+    </style>
+
+    <div class="uk-scope">
+        <div class="uk-grid-collapse uk-child-width-expand@m" uk-grid>
+            <!-- Grid Section with standard padding added, main input content -->
+            <div class="uk-padding ">
+                <div class="uk-container uk-flex uk-padding-remove uk-padding-remove-left uk-margin-remove-left">
+                    <h2 class="uk-heading-bullet">Tier 3 Pro Tracker</h2>
+                    <div class="uk-alert-danger uk-text-center uk-text-capitalize uk-margin-remove-vertical uk-margin-left"
+                        id="errorPTag" hidden="hidden" uk-alert>
+                        <p class="uk-text-bold uk-text-capitalize uk-text-large" id="errorP"> Error text goes here</p>
+                    </div>
+                </div>
+                <!-- Form with labels on top of controls -->
+                <form class="uk-form-stacked">
+                    <!-- form section-->
+
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="customerBox">Enter The Customer Number Here.</label>
+                        <div class="uk-form-controls uk-flex">
+                            <input class="uk-input" type="text" id="customerBox"
+                                placeholder="Enter The Customer Number Here"></input>
+                            <div class="uk-width-1-4@s uk-margin-left">
+                                <p class="uk-text-meta uk-text-small uk-margin-remove-top uk-text-danger"
+                                    hidden="hidden" id="mustCustomer">Must
+                                    Enter Customer Number</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="nameBox">Enter The Caller Name Here.</label>
+                        <div class="uk-form-controls uk-flex">
+                            <input class="uk-input" type="text" id="nameBox" placeholder="Enter The Caller Name Here."></input>
+                            <div class="uk-width-1-4@s uk-margin-left">
+                                <label><input class="uk-checkbox white-check" type="checkbox" id="nameNA"
+                                        name="checkboxNA"> Wont Provide </label>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="uk-child-width-expand@s uk-margin-remove-top" uk-grid>
+
+                        
+
+                        
+                    </div>
+                </form>
+                <div class="uk-margin uk-padding-top" uk-margin>
+                    <button id="parseButton" class="uk-button uk-button-primary">Parse</button>
+                    <button id="resetButton" class="uk-button uk-button-default">Reset / Clear</button>
+                    <button id="SubmitSlack" class="uk-button uk-button-danger" disabled="disabled">Submit To
+                        Slack</button>
+                    <div class="uk-alert-warning uk-margin-left uk-flex-inline" uk-alert>
+                        <h4 class="uk-margin-remove-bottom">Ticket Created After Transfer?</h4>
+                        <li class="tg-list-item uk-margin-remove-right">
+                            <input class="tgl tgl-flip" id="ticketCheckbox" type="checkbox" />
+                            <label class="tgl-btn uk-margin-remove-bottom uk-margin-remove-right" data-tg-off="Nope"
+                                data-tg-on="Yes" for="ticketCheckbox"></label>
+                        </li>
+                    </div>
+                </div>
+            </div>
+            <!-- Parse and reset buttons need to be outside of form -->
+        </div>
+
+
+        <div class="uk-card uk-card-default uk-card-body uk-background-muted uk-text-center">
+            <h3 class="uk-card-title">Instructions:</h3>
+            <ul class="uk-list uk-list-divider uk-text-capitalize uk-text-bold uk-margin-top">
+                <li>1. Enter Customer Number And The Caller Name</li>
+                <li>2. Select The Topics That Best Match The Call</li>
+                <li>3. Explain The Situation And Mark The Resolution</li>
+                <li>4. Click Parse To Generate Notes And Submit To Slack.</li>
+                <li>All Done!</li>
+            </ul>
+        </div>
+
+
+    </div>
+</body>
+
 </html>
