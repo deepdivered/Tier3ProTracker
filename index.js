@@ -31,10 +31,11 @@
     | Enable Slack button if a valid form has been filled and no error has occured.
     |--------------------------------------------------------------------------
     */
-
+    console.log(`JS file is imported`)
     $("#parseButton").click(function () {
-        customerNum = DOMPurify.sanitize($('#domainsBox').val().toLowerCase().trim());
-        customerName = DOMPurify.sanitize($('#guidBox').val().toLowerCase().trim());
+        console.log(`clicked`)
+        customerNum = DOMPurify.sanitize($('#customerBox').val().toLowerCase().trim());
+        customerName = DOMPurify.sanitize($('#nameBox').val().toLowerCase().trim());
         console.log(`customer number : ${customerNum} and the customer name : ${customerName}`);
 
         /*
@@ -65,15 +66,15 @@
         // }
 
         //received error string
-        function handleError(error) {
-            if (error !== false) {
-                $("#errorPTag").removeAttr("hidden");
-                $("#errorP").html(error);
-                timeoutModule = setTimeout(() => {
-                    $("#errorPTag").attr('hidden', 'hidden');
-                }, 8000);
-            }
-        }
+        // function handleError(error) {
+        //     if (error !== false) {
+        //         $("#errorPTag").removeAttr("hidden");
+        //         $("#errorP").html(error);
+        //         timeoutModule = setTimeout(() => {
+        //             $("#errorPTag").attr('hidden', 'hidden');
+        //         }, 8000);
+        //     }
+        // }
     })
 
     /*
@@ -87,28 +88,28 @@
     */
 
     //reset form values and variables
-    function handleReset() {
-        clearTimeout(timeoutModule);
-        $("input[type='checkbox']").prop('checked', false);
-        $("input[type='radio']").prop('checked', false);
-        $("input[type='text']").val('').attr('disabled', false);
-        $("#SubmitSlack").attr('disabled', 'disabled');
-        $("input[name='checkboxNA']").prop('checked', false).removeAttr('disabled');
-        $('#errorPTag').removeClass().attr('hidden', 'hidden').attr('class', 'uk-alert-danger uk-text-center uk-text-capitalize uk-margin-remove-vertical uk-margin-left uk-alert')
-        $('#mustDomain').attr('hidden', 'hidden');
-        $('#mustGuid').attr('hidden', 'hidden');
-        $("#parseButton").removeAttr('disabled');
-        $('input[type=checkbox]:disabled').removeAttr('disabled');
-        $("#errorP").html('');
-        demeanor = '';
-        understanding = '';
-        domains = '';
-        guid = '';
-        attributes = '';
-        training = '';
-        ticketCreated = "` No Ticket Created `";;
-        attrArray = [];
-        oppsArray = [];
-    }
+    // function handleReset() {
+    //     clearTimeout(timeoutModule);
+    //     $("input[type='checkbox']").prop('checked', false);
+    //     $("input[type='radio']").prop('checked', false);
+    //     $("input[type='text']").val('').attr('disabled', false);
+    //     $("#SubmitSlack").attr('disabled', 'disabled');
+    //     $("input[name='checkboxNA']").prop('checked', false).removeAttr('disabled');
+    //     $('#errorPTag').removeClass().attr('hidden', 'hidden').attr('class', 'uk-alert-danger uk-text-center uk-text-capitalize uk-margin-remove-vertical uk-margin-left uk-alert')
+    //     $('#mustDomain').attr('hidden', 'hidden');
+    //     $('#mustGuid').attr('hidden', 'hidden');
+    //     $("#parseButton").removeAttr('disabled');
+    //     $('input[type=checkbox]:disabled').removeAttr('disabled');
+    //     $("#errorP").html('');
+    //     demeanor = '';
+    //     understanding = '';
+    //     domains = '';
+    //     guid = '';
+    //     attributes = '';
+    //     training = '';
+    //     ticketCreated = "` No Ticket Created `";;
+    //     attrArray = [];
+    //     oppsArray = [];
+    // }
 
 })($, DOMPurify);

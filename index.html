@@ -8,7 +8,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.5/js/uikit-icons.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/1.0.8/purify.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript" src="./index.js"></script>
+
 </head>
 
 <body>
@@ -186,7 +186,8 @@
                     <div class="uk-margin">
                         <label class="uk-form-label" for="nameBox">Enter The Caller Name Here.</label>
                         <div class="uk-form-controls uk-flex">
-                            <input class="uk-input" type="text" id="nameBox" placeholder="Enter The Caller Name Here."></input>
+                            <input class="uk-input" type="text" id="nameBox"
+                                placeholder="Enter The Caller Name Here."></input>
                             <div class="uk-width-1-4@s uk-margin-left">
                                 <label><input class="uk-checkbox white-check" type="checkbox" id="nameNA"
                                         name="checkboxNA"> Wont Provide </label>
@@ -196,10 +197,78 @@
 
 
                     <div class="uk-child-width-expand@s uk-margin-remove-top" uk-grid>
+                        <div>
+                            <h4>Call Topic(s)</h4>
+                            <ul class="uk-list uk-list-large uk-list-default">
+                                <div class="uk-alert-success" uk-alert>
+                                    <li><label><input class="uk-checkbox white-check" type="checkbox" id="Domains"
+                                                name="productsCalledAbout">
+                                            Domains </label></li>
+                                    <li><label><input class="uk-checkbox white-check" type="checkbox" id="Hosting"
+                                                name="productsCalledAbout">
+                                            Hosting </label></li>
+                                    <li><label><input class="uk-checkbox white-check" type="checkbox" id="Email"
+                                                name="productsCalledAbout">
+                                            Email </label></li>
+                                    <li><label><input class="uk-checkbox white-check" type="checkbox" id="Websites"
+                                                name="productsCalledAbout">
+                                            Websites </label></li>
+                                    <li><label><input class="uk-checkbox white-check" type="checkbox" id="Security"
+                                                name="productsCalledAbout">
+                                            Security </label></li>
+                                    <li><label><input class="uk-checkbox white-check" type="checkbox" id="BusinessTools"
+                                                name="productsCalledAbout">
+                                            Business Tools </label></li>
+                                    <li><label><input class="uk-checkbox white-check" type="checkbox" id="Other"
+                                                name="productsCalledAbout">
+                                            Other (Leave a comment below) </label></li>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
 
-                        
+                    <div class="uk-child-width-expand@s uk-margin-remove-top" uk-grid>
 
-                        
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="situationBox">Describe the situation.</label>
+                            <div class="uk-form-controls uk-flex">
+                                <input class="uk-input" type="text" id="situationBox"
+                                    placeholder="Describe the situation."></input>
+                            </div>
+                        </div>
+
+                        <div class="uk-margin">
+                            <div class="uk-alert-warning uk-margin-left uk-flex-inline" uk-alert>
+                                <h4 class="uk-margin-remove-bottom">Issue was resolved?</h4>
+                                <li class="tg-list-item uk-margin-remove-right">
+                                    <input class="tgl tgl-flip" id="resolvedCheckbox" type="checkbox" />
+                                    <label class="tgl-btn uk-margin-remove-bottom uk-margin-remove-right"
+                                        data-tg-off="Nope" data-tg-on="Yes" for="resolvedCheckbox"></label>
+                                </li>
+                            </div>
+                        </div>
+
+                        <div class="uk-margin">
+                            <div class="uk-alert-warning uk-margin-left uk-flex-inline" uk-alert>
+                                <h4 class="uk-margin-remove-bottom">Inquiry Out Of Scope?</h4>
+                                <li class="tg-list-item uk-margin-remove-right">
+                                    <input class="tgl tgl-flip" id="scopeCheckbox" type="checkbox" />
+                                    <label class="tgl-btn uk-margin-remove-bottom uk-margin-remove-right"
+                                        data-tg-off="Nope" data-tg-on="Yes" for="scopeCheckbox"></label>
+                                </li>
+                            </div>
+                        </div>
+
+                        <div class="uk-margin">
+                            <div class="uk-alert-warning uk-margin-left uk-flex-inline" uk-alert>
+                                <h4 class="uk-margin-remove-bottom">Ticket Created After Transfer?</h4>
+                                <li class="tg-list-item uk-margin-remove-right">
+                                    <input class="tgl tgl-flip" id="ticketCheckbox" type="checkbox" />
+                                    <label class="tgl-btn uk-margin-remove-bottom uk-margin-remove-right"
+                                        data-tg-off="Nope" data-tg-on="Yes" for="ticketCheckbox"></label>
+                                </li>
+                            </div>
+                        </div>
                     </div>
                 </form>
                 <div class="uk-margin uk-padding-top" uk-margin>
@@ -208,12 +277,7 @@
                     <button id="SubmitSlack" class="uk-button uk-button-danger" disabled="disabled">Submit To
                         Slack</button>
                     <div class="uk-alert-warning uk-margin-left uk-flex-inline" uk-alert>
-                        <h4 class="uk-margin-remove-bottom">Ticket Created After Transfer?</h4>
-                        <li class="tg-list-item uk-margin-remove-right">
-                            <input class="tgl tgl-flip" id="ticketCheckbox" type="checkbox" />
-                            <label class="tgl-btn uk-margin-remove-bottom uk-margin-remove-right" data-tg-off="Nope"
-                                data-tg-on="Yes" for="ticketCheckbox"></label>
-                        </li>
+
                     </div>
                 </div>
             </div>
@@ -234,6 +298,7 @@
 
 
     </div>
+    <script type="text/javascript" src="./index.js"></script>
 </body>
 
 </html>
