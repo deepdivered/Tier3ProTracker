@@ -21,22 +21,27 @@
     let ticketCreated = "` No Ticket Created `";
     const successString = "Success. Ready To Submit To Slack!";
     const successSlack = "Submitted To Slack!";
-    const domainsRegex = /([a-zA-Z0-9-_]+\.)*[a-zA-Z0-9][a-zA-Z0-9-_]+\.[a-zA-Z]{2,11}?$/i //works against a list of 20k valid domains
     //set domains N/A checkbox change checks
 
     /*
     |--------------------------------------------------------------------------
     | Click listener on the parse button handles form inputs logic
     | Sanitize the inputs and perform error checking then format values for slack
-    | Enable Slack button if a valid form has been filled and no error has occured.
     |--------------------------------------------------------------------------
     */
-    console.log(`JS file is imported`)
     $("#parseButton").click(function () {
-        console.log(`clicked`)
-        customerNum = DOMPurify.sanitize($('#customerBox').val().toLowerCase().trim());
-        customerName = DOMPurify.sanitize($('#nameBox').val().toLowerCase().trim());
-        console.log(`customer number : ${customerNum} and the customer name : ${customerName}`);
+        if (areThereFormErrors() === false) {
+            console.log(`clicked`)
+            customerNum = DOMPurify.sanitize($('#customerBox').val().toLowerCase().trim());
+            customerName = DOMPurify.sanitize($('#nameBox').val().toLowerCase().trim());
+            console.log(`customer number : ${customerNum} and the customer name : ${customerName}`);
+        
+
+
+        
+        }
+
+
 
         /*
         |--------------------------------------------------------------------------
@@ -80,8 +85,6 @@
     /*
     |--------------------------------------------------------------------------
     | Event Handlers and form reset function
-    | Set demeanor and understanding variables
-    | Submit to Slack button
     |--------------------------------------------------------------------------
     | For slack configuration please view the API documentation for Incoming Webhooks
     | https://godaddy.slack.com/apps/A0F7XDUAZ-incoming-webhooks?page=1

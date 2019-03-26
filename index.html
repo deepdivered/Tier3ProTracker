@@ -185,11 +185,11 @@
                     <div class="uk-margin">
                         <label class="uk-form-label" for="nameBox">Enter The Caller Name Here.</label>
                         <div class="uk-form-controls uk-flex">
-                            <input class="uk-input" type="text" id="nameBox"
-                                placeholder="Same As Account Name." disabled=true></input>
+                            <input class="uk-input" type="text" id="nameBox" placeholder="Same As Account Name."
+                                disabled=true></input>
                             <div class="uk-width-1-4@s uk-margin-left">
-                                <label><input class="uk-checkbox " type="checkbox" id="nameNA"
-                                        name="checkboxNA"> Name Different Then Account Name?</label>
+                                <label><input class="uk-checkbox " type="checkbox" id="nameNA" name="checkboxNA"> Name
+                                    Different Then Account Name?</label>
                             </div>
                         </div>
                     </div>
@@ -201,70 +201,72 @@
                         </div>
                     </div>
 
-
-                    <div class="uk-child-width-expand@s uk-margin-remove-top" uk-grid>
-                        <div>
-                            <h4>Call Topic(s)</h4>
-                            <ul class="uk-list uk-list-large uk-list-default">
-                                <div class="uk-alert-success" uk-alert>
-                                    <li><label><input class="uk-checkbox" type="checkbox" id="Domains"
-                                                name="productsCalledAbout">
-                                            Domains </label></li>
-                                    <li><label><input class="uk-checkbox" type="checkbox" id="Hosting"
-                                                name="productsCalledAbout">
-                                            Hosting </label></li>
-                                    <li><label><input class="uk-checkbox" type="checkbox" id="Email"
-                                                name="productsCalledAbout">
-                                            Email </label></li>
-                                    <li><label><input class="uk-checkbox" type="checkbox" id="Websites"
-                                                name="productsCalledAbout">
-                                            Websites </label></li>
-                                    <li><label><input class="uk-checkbox" type="checkbox" id="Security"
-                                                name="productsCalledAbout">
-                                            Security </label></li>
-                                    <li><label><input class="uk-checkbox" type="checkbox" id="BusinessTools"
-                                                name="productsCalledAbout">
-                                            Business Tools </label></li>
-                                    <li><label><input class="uk-checkbox" type="checkbox" id="Other"
-                                                name="productsCalledAbout">
-                                            Other (Leave a comment below) </label></li>
-                                </div>
-                            </ul>
-                        </div>
-                    </div>
-
-
-
-                    <div class="uk-margin-remove-top" uk-grid>
-                        <div class="uk-margin">
-                            <div class="uk-alert-warning" uk-alert>
-                                <div class="uk-flex">
-                                    <h4>Issue Was Resolved?</h4>
-                                    <li class="tg-list-item uk-margin-remove-right">
-                                        <input class="tgl tgl-flip" id="resolvedCheckbox" type="checkbox" />
-                                        <label class="tgl-btn uk-margin-remove-bottom uk-margin-remove-right"
-                                            data-tg-off="Nope" data-tg-on="Yes" for="resolvedCheckbox"></label>
-                                    </li>
-                                </div>
-                                <div class="uk-flex">
-                                    <h4>Inquiry Out Of Scope?</h4>
-                                    <li class="tg-list-item uk-margin-remove-right">
-                                        <input class="tgl tgl-flip" id="scopeCheckbox" type="checkbox" />
-                                        <label class="tgl-btn uk-margin-remove-bottom uk-margin-remove-right"
-                                            data-tg-off="Nope" data-tg-on="Yes" for="scopeCheckbox"></label>
-                                    </li>
-                                </div>
-                                <div class="uk-flex">
-                                    <h4 class="uk-margin-remove-bottom">Escalation Created For Caller?</h4>
-                                    <li class="tg-list-item uk-margin-remove-right">
-                                        <input class="tgl tgl-flip" id="ticketCheckbox" type="checkbox" />
-                                        <label class="tgl-btn uk-margin-remove-bottom uk-margin-remove-right"
-                                            data-tg-off="Nope" data-tg-on="Yes" for="ticketCheckbox"></label>
-                                    </li>
-                                </div>
+                    <div class="uk-margin" uk-grid>
+                        <div class="uk-width-1-2 uk-margin-remove-top">
+                            <div class="matched-class">
+                                <h4>Call Topic(s)</h4>
+                                <ul class="uk-list uk-list-large uk-list-default">
+                                    <div class="uk-alert-success" uk-alert>
+                                        <li><label><input class="uk-checkbox" type="checkbox" id="Domains"
+                                                    name="productsCalledAbout">
+                                                Domains </label></li>
+                                        <li><label><input class="uk-checkbox" type="checkbox" id="Hosting"
+                                                    name="productsCalledAbout">
+                                                Hosting </label></li>
+                                        <li><label><input class="uk-checkbox" type="checkbox" id="Email"
+                                                    name="productsCalledAbout">
+                                                Email </label></li>
+                                        <li><label><input class="uk-checkbox" type="checkbox" id="Websites"
+                                                    name="productsCalledAbout">
+                                                Websites </label></li>
+                                        <li><label><input class="uk-checkbox" type="checkbox" id="Security"
+                                                    name="productsCalledAbout">
+                                                Security </label></li>
+                                        <li><label><input class="uk-checkbox" type="checkbox" id="BusinessTools"
+                                                    name="productsCalledAbout">
+                                                Business Tools </label></li>
+                                        <li><label><input class="uk-checkbox" type="checkbox" id="Other"
+                                                    name="productsCalledAbout">
+                                                Other (Leave a comment below) </label></li>
+                                    </div>
+                                </ul>
                             </div>
                         </div>
+
+                        <div class="uk-margin-remove-top uk-width-1-2" uk-height-match=".matched-class">
+                                <h4>Call Resolution</h4>
+                                <div class="uk-alert-warning" uk-alert>
+                                    <div class="uk-flex">
+                                        <h4>Issue Was Resolved?</h4>
+                                        <li class="tg-list-item uk-margin-remove-right">
+                                            <input class="tgl tgl-flip" id="resolvedCheckbox" type="checkbox" />
+                                            <label class="tgl-btn uk-margin-remove-bottom uk-margin-remove-right"
+                                                data-tg-off="Nope" data-tg-on="Yes" for="resolvedCheckbox"></label>
+                                        </li>
+                                    </div>
+                                    <div class="uk-flex">
+                                        <h4>Inquiry Out Of Scope?</h4>
+                                        <li class="tg-list-item uk-margin-remove-right">
+                                            <input class="tgl tgl-flip" id="scopeCheckbox" type="checkbox" />
+                                            <label class="tgl-btn uk-margin-remove-bottom uk-margin-remove-right"
+                                                data-tg-off="Nope" data-tg-on="Yes" for="scopeCheckbox"></label>
+                                        </li>
+                                    </div>
+                                    <div class="uk-flex">
+                                        <h4 class="uk-margin-remove-bottom">Escalation Created For Caller?</h4>
+                                        <li class="tg-list-item uk-margin-remove-right">
+                                            <input class="tgl tgl-flip" id="ticketCheckbox" type="checkbox" />
+                                            <label class="tgl-btn uk-margin-remove-bottom uk-margin-remove-right"
+                                                data-tg-off="Nope" data-tg-on="Yes" for="ticketCheckbox"></label>
+                                        </li>
+                                    </div>
+                                </div>
+                            
+                        </div>
                     </div>
+
+
+
                 </form>
                 <div class="uk-margin uk-padding-top" uk-margin>
                     <button id="parseButton" class="uk-button uk-button-primary">Parse</button>
@@ -281,8 +283,8 @@
             <h3 class="uk-card-title">Instructions:</h3>
             <ul class="uk-list uk-list-divider uk-text-capitalize uk-text-bold uk-margin-top">
                 <li>1. Enter Customer Number And The Caller Name</li>
-                <li>2. Select The Topics That Best Match The Call</li>
-                <li>3. Explain The Situation And Mark The Resolution</li>
+                <li>2. Explain The Situation And Check Related Topics</li>
+                <li>3. Specify Resolution Information</li>
                 <li>4. Click Parse To Generate Notes And Submit To Slack.</li>
                 <li>All Done!</li>
             </ul>
