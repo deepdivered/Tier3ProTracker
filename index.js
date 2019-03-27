@@ -35,10 +35,10 @@
             customerNum = DOMPurify.sanitize($('#customerBox').val().toLowerCase().trim());
             customerName = DOMPurify.sanitize($('#nameBox').val().toLowerCase().trim());
             console.log(`customer number : ${customerNum} and the customer name : ${customerName}`);
-        
 
 
-        
+
+
         }
 
 
@@ -89,6 +89,44 @@
     | For slack configuration please view the API documentation for Incoming Webhooks
     | https://godaddy.slack.com/apps/A0F7XDUAZ-incoming-webhooks?page=1
     */
+
+    // This listener will fire if the user chooses to enter a caller name manually.
+    $('#nameNA').on('change', function () {
+        if ($('#nameNA').is(':checked')) {
+            $("#nameBox").prop('disabled', false).prop('placeholder','Enter Caller Name.');
+        } else if (!$('#nameNA').is(':checked')) {
+            $("#nameBox").prop('disabled', true).prop('placeholder','Same As Account Name.');
+        }
+    })
+
+    // This listener will fire if the user chooses 'other' as a call topic.
+    $('#Other').on('change', function () {
+        if ($('#Other').is(':checked')) {
+            //Enable/disable comments area.
+            $("#commentsBox").prop('disabled', false).val('');
+            $('#hiddenComments').removeAttr('hidden');
+            //Enable/disable call topics.
+            $('#Domains').prop('disabled', true).prop('checked', false);
+            $('#Hosting').prop('disabled', true).prop('checked', false);
+            $('#Email').prop('disabled', true).prop('checked', false);
+            $('#Websites').prop('disabled', true).prop('checked', false);
+            $('#Security').prop('disabled', true).prop('checked', false);
+            $('#BusinessTools').prop('disabled', true).prop('checked', false);
+        } else if (!$('#Other').is(':checked')) {
+            //Enable/disable comments area.
+            $("#commentsBox").prop('disabled', true).val('');
+            $('#hiddenComments').attr('hidden', 'hidden');
+            //Enable/disable call topics.
+            $('#Domains').prop('disabled', false);
+            $('#Hosting').prop('disabled', false);
+            $('#Email').prop('disabled', false);
+            $('#Websites').prop('disabled', false);
+            $('#Security').prop('disabled', false);
+            $('#BusinessTools').prop('disabled', false);
+
+        }
+    })
+
 
     //reset form values and variables
     // function handleReset() {
