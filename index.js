@@ -48,6 +48,7 @@
     const resolvedCheckbox = $('#resolvedCheckbox');
     const scopeCheckbox = $('#scopeCheckbox');
     const ticketCheckbox = $('#ticketCheckbox');
+    const inputNameResolutionCheckboxes = $("input[name='resolutionCheckboxes']");
 
     // Buttons
     const parseButton = $('#parseButton');
@@ -65,17 +66,10 @@
     */
     parseButton.click(function () {
         if (areThereFormErrors() === false) {
-            console.log(`clicked`)
-            customerNum = DOMPurify.sanitize(customerBox.val().toLowerCase().trim());
-            customerName = DOMPurify.sanitize(nameBox.val().toLowerCase().trim());
-            console.log(`customer number : ${customerNum} and the customer name : ${customerName}`);
-
-
+            processOutput();
         } else {
             handleError(areThereFormErrors())
         }
-
-
 
         /*
         |--------------------------------------------------------------------------
@@ -83,15 +77,17 @@
         |--------------------------------------------------------------------------
         */
 
+
         //Check for errors before enabling slack submission
         function areThereFormErrors() {
-            if (DOMPurify.sanitize(customerBox.val().trim()) === "" ) { return "Enter a valid customer number"; }
+            if (DOMPurify.sanitize(customerBox.val().trim()) === "") { return "Enter a valid customer number"; }
             if (nameDifferntCheckbox.is(':checked') && DOMPurify.sanitize(nameBox.val().trim()) === "") { return "Must enter caller name or alias"; }
             if (DOMPurify.sanitize(situationBox.val().trim()) === "" || situationBox.val().length <= 7) { return "Describe the situation. At least a sentence or two."; }
             if (Other.is(':checked') && DOMPurify.sanitize(commentsBox.val().trim()) === "") { return "Enter comments about the topic."; }
-            if (ticketCheckbox.is(':checked') && DOMPurify.sanitize(escalationNumber.val().trim()) === "") { return "Enter ticket number."}
+            if (ticketCheckbox.is(':checked') && DOMPurify.sanitize(escalationNumber.val().trim()) === "") { return "Enter ticket number." }
             return false;
         }
+
         //When errrs occur then areThereFormErrors is passed to handleError.
         function handleError(error) {
             if (error !== false) {
@@ -104,7 +100,54 @@
             }
         }
 
+        //Parse from inputs and show note template
+        function processOutput() {
+            resultsOutput.val(resultsFormatter())
+        }
 
+        function resultsFormatter() {
+            let results;
+            let productsArray = [];
+            let formValues = {
+                customerNumber: DOMPurify.sanitize(customerBox.val().trim()),
+                callerName: DOMPurify.sanitize(nameBox.val().trim()),
+                products: '',
+                situation: '',
+                resolved: false,
+                oos: false,
+                escalationCreated: false,
+                ticketNumber: '',
+                comments: '',
+            }
+            //loop through checkboxes for values.
+            inputNameProductsCalledAbout.each(function () {
+                if (this.is('checked')) { productsArray.push(this.id) }
+                if (this.is('checked') && this.id === 'Other') { formValues.comments = commentsBox.val(); }
+            })
+            inputNameResolutionCheckboxes.each(function () {
+                if (this.is('checked') && this.id === 'resolvedCheckbox') { formValues.resolved = true; }
+                if (this.is('checked') && this.id === 'scopeCheckbox') { formValues.oos = true; }
+                if (this.is('checked') && this.id === 'ticketCheckbox') { formValues.escalationCreated = true; formValues.ticketNumber = escalationNumber.val(); }
+            })
+
+            // setting object with array values.
+            formValues.products = productsArray;
+
+            // Catching if no name provided.
+            if (formValues.callerName === '') { formValues.callerName = 'Same as account name'; }
+            return results;
+        }
+
+        // Customer #
+        // Caller:
+
+        // Product (check boxes)
+        // 1. Domains  2. Hosting 3. Email 4. Websites 5. Security 6. Business Tools 7. other (see comments)
+
+        // Issue:
+        // Resolved: y/n (checkboxes)  escalation required: y/n (checkboxes)
+        // Out of Scope:  y/n (checkboxes)
+        // Comments: (only if other product is checked)      
 
 
         //Adds backticks ` for formatting in Slack
@@ -116,7 +159,7 @@
         // }
 
         //received error string
-        
+
     })
 
     /*
@@ -137,15 +180,15 @@
     })
 
     ticketCheckbox.on('change', function () {
-        if (ticketCheckbox.is(':checked')) { 
+        if (ticketCheckbox.is(':checked')) {
             escalationNumber.prop('disabled', false).removeAttr('hidden');
         } else {
-            escalationNumber.prop('disabled', true).val('').attr('hidden','hidden');
+            escalationNumber.prop('disabled', true).val('').attr('hidden', 'hidden');
         }
     })
 
     // This listener will fire when user clicks a call topic.
-    inputNameProductsCalledAbout.on('change', function(){
+    inputNameProductsCalledAbout.on('change', function () {
         if ($(this).prop('id') !== 'Other') { Other.prop('disabled', true).prop('checked', false); }
         if (Other.is(':checked')) {
             //Enable/disable comments area.
@@ -170,11 +213,11 @@
             Security.prop('disabled', false);
             BusinessTools.prop('disabled', false);
         }
-        if(!inputNameProductsCalledAbout.is(':checked')) {
+        if (!inputNameProductsCalledAbout.is(':checked')) {
             Other.prop('disabled', false);
         }
     })
-    
+
 
 
     //reset form values and variables
