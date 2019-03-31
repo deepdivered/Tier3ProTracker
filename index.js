@@ -24,10 +24,14 @@
     //set domains N/A checkbox change checks
 
     // declare the form elements to minimize dom calls.
+    // Input Boxes
     const customerBox = $('#customerBox');
     const nameBox = $('#nameBox');
     const situationBox = $('#situationBox');
     const nameDifferntCheckbox = $('#nameNA');
+    //Enable/disable comments area.
+    const commentsBox = $("#commentsBox")
+    const hiddenCommentsDiv = $('#hiddenComments')
 
     // Topics 
     const Domains = $('#Domains');
@@ -62,6 +66,8 @@
             console.log(`customer number : ${customerNum} and the customer name : ${customerName}`);
 
 
+        } else {
+            handleError(areThereFormErrors())
         }
 
 
@@ -74,17 +80,27 @@
 
         //Check for errors before enabling slack submission
         function areThereFormErrors() {
-            if (domains.trim() === "" && domains.toUpperCase().trim() !== "N/A") { return "Enter a valid domain"; }
-            if (domains.toUpperCase().trim() === "N/A" && !$('#domainsNA').is(":checked")) { return "Must enter domain OR guid"; }
-            if (guid.toUpperCase().trim() === "N/A" && !$('#guidNA').is(":checked")) { return "Must enter domain OR guid"; }
-            if (guid.trim() === "" && guid.toUpperCase().trim() !== "N/A") { return "Enter a valid guid"; }
-            if (domainsRegex.exec(domains.trim()) === null && domains.toUpperCase().trim() !== "N/A") { return "Enter a valid domain"; }
-            if (!$("input[name='radioDemeanor']:checked").val()) { return "Please select a call demeanor"; }
-            if (!$("input[name='radioUnderstanding']:checked").val()) { return "Please select agent understanding"; }
-            if (!$("input[name='CallAttributes']:checked").val()) { return "Please select call attribute(s)"; }
-            if (!$("input[name='TrainingOpp']:checked").val()) { return "Please select a training option"; }
+            if (DOMPurify.sanitize(customerBox.val().trim()) === "" ) { return "Enter a valid customer number"; }
+            if (nameDifferntCheckbox.is(':checked') && DOMPurify.sanitize(nameBox.val().trim()) === "") { return "Must enter caller name or alias"; }
+            if (DOMPurify.sanitize(situationBox.val().trim()) === "" || situationBox.val().length <= 7) { return "Describe the situation. At least a sentence or two."; }
+            if (Other.is(':checked') && DOMPurify.sanitize(commentsBox.val().trim()) === "") { return "Enter comments about the topic." }
             return false;
         }
+
+        function handleError(error) {
+            if (error !== false) {
+                $("#errorPTag").removeAttr("hidden");
+                $("#errorP").html(error);
+                timeoutModule = setTimeout(() => {
+                    $("#errorPTag").attr('hidden', 'hidden');
+                    $("#errorP").html('');
+                }, 3000);
+            }
+        }
+
+
+
+
         //Adds backticks ` for formatting in Slack
         // function formatValues() {
         //     domains = "` " + domains + " `";
@@ -94,15 +110,7 @@
         // }
 
         //received error string
-        // function handleError(error) {
-        //     if (error !== false) {
-        //         $("#errorPTag").removeAttr("hidden");
-        //         $("#errorP").html(error);
-        //         timeoutModule = setTimeout(() => {
-        //             $("#errorPTag").attr('hidden', 'hidden');
-        //         }, 8000);
-        //     }
-        // }
+        
     })
 
     /*
@@ -115,37 +123,37 @@
 
     // This listener will fire if the user chooses to enter a caller name manually.
     nameDifferntCheckbox.on('change', function () {
-        if ($('#nameNA').is(':checked')) {
-            $("#nameBox").prop('disabled', false).prop('placeholder', 'Enter Caller Name.');
-        } else if (!$('#nameNA').is(':checked')) {
-            $("#nameBox").prop('disabled', true).prop('placeholder', 'Same As Account Name.');
+        if (nameDifferntCheckbox.is(':checked')) {
+            nameBox.prop('disabled', false).prop('placeholder', 'Enter Caller Name.');
+        } else if (!nameDifferntCheckbox.is(':checked')) {
+            nameBox.prop('disabled', true).prop('placeholder', 'Same As Account Name.');
         }
     })
 
     // This listener will fire if the user chooses 'other' as a call topic.
     Other.on('change', function () {
-        if ($('#Other').is(':checked')) {
+        if (Other.is(':checked')) {
             //Enable/disable comments area.
-            $("#commentsBox").prop('disabled', false).val('');
-            $('#hiddenComments').removeAttr('hidden');
+            commentsBox.prop('disabled', false).val('');
+            hiddenCommentsDiv.removeAttr('hidden');
             //Enable/disable call topics.
-            $('#Domains').prop('disabled', true).prop('checked', false);
-            $('#Hosting').prop('disabled', true).prop('checked', false);
-            $('#Email').prop('disabled', true).prop('checked', false);
-            $('#Websites').prop('disabled', true).prop('checked', false);
-            $('#Security').prop('disabled', true).prop('checked', false);
-            $('#BusinessTools').prop('disabled', true).prop('checked', false);
-        } else if (!$('#Other').is(':checked')) {
+            Domains.prop('disabled', true).prop('checked', false);
+            Hosting.prop('disabled', true).prop('checked', false);
+            Email.prop('disabled', true).prop('checked', false);
+            Websites.prop('disabled', true).prop('checked', false);
+            Security.prop('disabled', true).prop('checked', false);
+            BusinessTools.prop('disabled', true).prop('checked', false);
+        } else if (!Other.is(':checked')) {
             //Enable/disable comments area.
-            $("#commentsBox").prop('disabled', true).val('');
-            $('#hiddenComments').attr('hidden', 'hidden');
+            commentsBox.prop('disabled', true).val('');
+            hiddenCommentsDiv.attr('hidden', 'hidden');
             //Enable/disable call topics.
-            $('#Domains').prop('disabled', false);
-            $('#Hosting').prop('disabled', false);
-            $('#Email').prop('disabled', false);
-            $('#Websites').prop('disabled', false);
-            $('#Security').prop('disabled', false);
-            $('#BusinessTools').prop('disabled', false);
+            Domains.prop('disabled', false);
+            Hosting.prop('disabled', false);
+            Email.prop('disabled', false);
+            Websites.prop('disabled', false);
+            Security.prop('disabled', false);
+            BusinessTools.prop('disabled', false);
 
         }
     })
