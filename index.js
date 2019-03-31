@@ -54,6 +54,9 @@
     const resetButton = $('#resetButton');
     const SubmitSlack = $('#SubmitSlack');
 
+    // Output
+    const resultsOutput = $('#resultsOutput');
+
     /*
     |--------------------------------------------------------------------------
     | Click listener on the parse button handles form inputs logic
@@ -85,7 +88,8 @@
             if (DOMPurify.sanitize(customerBox.val().trim()) === "" ) { return "Enter a valid customer number"; }
             if (nameDifferntCheckbox.is(':checked') && DOMPurify.sanitize(nameBox.val().trim()) === "") { return "Must enter caller name or alias"; }
             if (DOMPurify.sanitize(situationBox.val().trim()) === "" || situationBox.val().length <= 7) { return "Describe the situation. At least a sentence or two."; }
-            if (Other.is(':checked') && DOMPurify.sanitize(commentsBox.val().trim()) === "") { return "Enter comments about the topic." }
+            if (Other.is(':checked') && DOMPurify.sanitize(commentsBox.val().trim()) === "") { return "Enter comments about the topic."; }
+            if (ticketCheckbox.is(':checked') && DOMPurify.sanitize(escalationNumber.val().trim()) === "") { return "Enter ticket number."}
             return false;
         }
         //When errrs occur then areThereFormErrors is passed to handleError.
