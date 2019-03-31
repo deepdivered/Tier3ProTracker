@@ -23,20 +23,43 @@
     const successSlack = "Submitted To Slack!";
     //set domains N/A checkbox change checks
 
+    // declare the form elements to minimize dom calls.
+    const customerBox = $('#customerBox');
+    const nameBox = $('#nameBox');
+    const situationBox = $('#situationBox');
+    const nameDifferntCheckbox = $('#nameNA');
+
+    // Topics 
+    const Domains = $('#Domains');
+    const Hosting = $('#Hosting');
+    const Email = $('#Email');
+    const Websites = $('#Websites');
+    const Security = $('#Security');
+    const BusinessTools = $('#BusinessTools');
+    const Other = $('#Other');
+
+    // Resolutions
+    const resolvedCheckbox = $('#resolvedCheckbox');
+    const scopeCheckbox = $('#scopeCheckbox');
+    const ticketCheckbox = $('#ticketCheckbox');
+
+    // Buttons
+    const parseButton = $('#parseButton');
+    const resetButton = $('#resetButton');
+    const SubmitSlack = $('#SubmitSlack');
+
     /*
     |--------------------------------------------------------------------------
     | Click listener on the parse button handles form inputs logic
     | Sanitize the inputs and perform error checking then format values for slack
     |--------------------------------------------------------------------------
     */
-    $("#parseButton").click(function () {
+    parseButton.click(function () {
         if (areThereFormErrors() === false) {
             console.log(`clicked`)
-            customerNum = DOMPurify.sanitize($('#customerBox').val().toLowerCase().trim());
-            customerName = DOMPurify.sanitize($('#nameBox').val().toLowerCase().trim());
+            customerNum = DOMPurify.sanitize(customerBox.val().toLowerCase().trim());
+            customerName = DOMPurify.sanitize(nameBox.val().toLowerCase().trim());
             console.log(`customer number : ${customerNum} and the customer name : ${customerName}`);
-
-
 
 
         }
@@ -50,18 +73,18 @@
         */
 
         //Check for errors before enabling slack submission
-        // function errorCheck() {
-        //     if (domains.trim() === "" && domains.toUpperCase().trim() !== "N/A") { return "Enter a valid domain"; }
-        //     if (domains.toUpperCase().trim() === "N/A" && !$('#domainsNA').is(":checked")) { return "Must enter domain OR guid"; }
-        //     if (guid.toUpperCase().trim() === "N/A" && !$('#guidNA').is(":checked")) { return "Must enter domain OR guid"; }
-        //     if (guid.trim() === "" && guid.toUpperCase().trim() !== "N/A") { return "Enter a valid guid"; }
-        //     if (domainsRegex.exec(domains.trim()) === null && domains.toUpperCase().trim() !== "N/A") { return "Enter a valid domain"; }
-        //     if (!$("input[name='radioDemeanor']:checked").val()) { return "Please select a call demeanor"; }
-        //     if (!$("input[name='radioUnderstanding']:checked").val()) { return "Please select agent understanding"; }
-        //     if (!$("input[name='CallAttributes']:checked").val()) { return "Please select call attribute(s)"; }
-        //     if (!$("input[name='TrainingOpp']:checked").val()) { return "Please select a training option"; }
-        //     return false;
-        // }
+        function areThereFormErrors() {
+            if (domains.trim() === "" && domains.toUpperCase().trim() !== "N/A") { return "Enter a valid domain"; }
+            if (domains.toUpperCase().trim() === "N/A" && !$('#domainsNA').is(":checked")) { return "Must enter domain OR guid"; }
+            if (guid.toUpperCase().trim() === "N/A" && !$('#guidNA').is(":checked")) { return "Must enter domain OR guid"; }
+            if (guid.trim() === "" && guid.toUpperCase().trim() !== "N/A") { return "Enter a valid guid"; }
+            if (domainsRegex.exec(domains.trim()) === null && domains.toUpperCase().trim() !== "N/A") { return "Enter a valid domain"; }
+            if (!$("input[name='radioDemeanor']:checked").val()) { return "Please select a call demeanor"; }
+            if (!$("input[name='radioUnderstanding']:checked").val()) { return "Please select agent understanding"; }
+            if (!$("input[name='CallAttributes']:checked").val()) { return "Please select call attribute(s)"; }
+            if (!$("input[name='TrainingOpp']:checked").val()) { return "Please select a training option"; }
+            return false;
+        }
         //Adds backticks ` for formatting in Slack
         // function formatValues() {
         //     domains = "` " + domains + " `";
@@ -91,16 +114,16 @@
     */
 
     // This listener will fire if the user chooses to enter a caller name manually.
-    $('#nameNA').on('change', function () {
+    nameDifferntCheckbox.on('change', function () {
         if ($('#nameNA').is(':checked')) {
-            $("#nameBox").prop('disabled', false).prop('placeholder','Enter Caller Name.');
+            $("#nameBox").prop('disabled', false).prop('placeholder', 'Enter Caller Name.');
         } else if (!$('#nameNA').is(':checked')) {
-            $("#nameBox").prop('disabled', true).prop('placeholder','Same As Account Name.');
+            $("#nameBox").prop('disabled', true).prop('placeholder', 'Same As Account Name.');
         }
     })
 
     // This listener will fire if the user chooses 'other' as a call topic.
-    $('#Other').on('change', function () {
+    Other.on('change', function () {
         if ($('#Other').is(':checked')) {
             //Enable/disable comments area.
             $("#commentsBox").prop('disabled', false).val('');
