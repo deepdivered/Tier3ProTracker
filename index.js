@@ -29,7 +29,8 @@
     const nameBox = $('#nameBox');
     const situationBox = $('#situationBox');
     const nameDifferntCheckbox = $('#nameNA');
-    //Enable/disable comments area.
+    const escalationNumber = $('#escalationNumber');
+    // comments area.
     const commentsBox = $("#commentsBox")
     const hiddenCommentsDiv = $('#hiddenComments')
 
@@ -41,6 +42,7 @@
     const Security = $('#Security');
     const BusinessTools = $('#BusinessTools');
     const Other = $('#Other');
+    const inputNameProductsCalledAbout = $("input[name='productsCalledAbout']");
 
     // Resolutions
     const resolvedCheckbox = $('#resolvedCheckbox');
@@ -86,7 +88,7 @@
             if (Other.is(':checked') && DOMPurify.sanitize(commentsBox.val().trim()) === "") { return "Enter comments about the topic." }
             return false;
         }
-
+        //When errrs occur then areThereFormErrors is passed to handleError.
         function handleError(error) {
             if (error !== false) {
                 $("#errorPTag").removeAttr("hidden");
@@ -130,8 +132,17 @@
         }
     })
 
-    // This listener will fire if the user chooses 'other' as a call topic.
-    Other.on('change', function () {
+    ticketCheckbox.on('change', function () {
+        if (ticketCheckbox.is(':checked')) { 
+            escalationNumber.prop('disabled', false).removeAttr('hidden');
+        } else {
+            escalationNumber.prop('disabled', true).val('').attr('hidden','hidden');
+        }
+    })
+
+    // This listener will fire when user clicks a call topic.
+    inputNameProductsCalledAbout.on('change', function(){
+        if ($(this).prop('id') !== 'Other') { Other.prop('disabled', true).prop('checked', false); }
         if (Other.is(':checked')) {
             //Enable/disable comments area.
             commentsBox.prop('disabled', false).val('');
@@ -154,9 +165,12 @@
             Websites.prop('disabled', false);
             Security.prop('disabled', false);
             BusinessTools.prop('disabled', false);
-
+        }
+        if(!inputNameProductsCalledAbout.is(':checked')) {
+            Other.prop('disabled', false);
         }
     })
+    
 
 
     //reset form values and variables
