@@ -10,11 +10,13 @@
     // Whole-script strict mode syntax
     'use strict';
 
+    // Contains Slack API Url. Should NOT be on Git
+
+    // let slackApiUrl = "EXAMPLEAPIHERE";
+
     // Contains the final form values that will be used to send to slack.
     let finalFormValuesToSlack;
 
-    let ticketCreated = "` No Ticket Created `";
-    const successString = "Success. Ready To Submit To Slack!";
     const successSlack = "Submitted To Slack!";
     //set domains N/A checkbox change checks
 
@@ -53,6 +55,9 @@
     // Output
     const resultsOutput = $('#resultsOutput');
     const hiddenResultsArea = $('#hiddenResultsArea');
+    const slackIconUrl = "https://s3-us-west-2.amazonaws.com/slack-files2/bot_icons/2019-03-27/591799331895_48.png";
+    const slackUsername = "Pro Pilot Call Tracker";
+    let timeoutModule;
 
     /*
     |--------------------------------------------------------------------------
@@ -86,7 +91,7 @@
             if (error !== false) {
                 $("#errorPTag").removeAttr("hidden");
                 $("#errorP").html(error);
-                setTimeout(() => {
+                timeoutModule = setTimeout(() => {
                     $("#errorPTag").attr('hidden', 'hidden');
                     $("#errorP").html('');
                 }, 3000);
@@ -147,6 +152,17 @@
         console.log(`here is the object to work with in slack function. ${JSON.stringify(finalFormValuesToSlack)}`)
         SubmitSlack.prop('disabled', true);
         parseButton.prop('disabled', true);
+        
+        let text = `#### Pro Pilot Call Tracker ####\nCaller Name: \`${finalFormValuesToSlack.callerName}\`\nProducts Related To Inquiry: \`${finalFormValuesToSlack.products.toString()}\`\nSituation: \`\`\`${finalFormValuesToSlack.situation}\`\`\`\n\nResolved: \`${finalFormValuesToSlack.resolved ? 'True' : 'False'}\`\nOut of Scope: \`${finalFormValuesToSlack.oos ? 'True' : 'False'}\`\nEscalation Created: \`${finalFormValuesToSlack.escalationCreated ? `True - Ticket ${finalFormValuesToSlack.ticketNumber}` : 'False'}\`\nComments: \`${finalFormValuesToSlack.comments === '' ? 'N/A' : finalFormValuesToSlack.comments}\``;
+
+        $.ajax({ data: 'payload=' + JSON.stringify({ "text": text, "icon_url":slackIconUrl, "username":slackUsername}), dataType: 'json', processData: false, type: 'POST', 'url':slackApiUrl });
+        
+        $("#errorPTag").removeAttr('hidden').removeClass('uk-alert-success').addClass('uk-alert-primary');
+        $("#errorP").html(successSlack);
+        timeoutModule = setTimeout(() => {
+            $("#errorPTag").attr('hidden', 'hidden').removeClass('uk-alert-primary').addClass('uk-alert-danger') 
+            $("#errorP").html('');
+        }, 15000);
     })
 
     /*
@@ -172,6 +188,7 @@
         hiddenResultsArea.attr('hidden', 'hidden')     
         resultsOutput.val('');
         parseButton.prop('disabled', false);
+        clearTimeout(timeoutModule);
     })
 
     // This listener will fire if the user chooses to enter a caller name manually.
