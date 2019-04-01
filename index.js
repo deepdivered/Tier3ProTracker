@@ -10,14 +10,6 @@
     // Whole-script strict mode syntax
     'use strict';
 
-    let customerNum;
-    let customerName;
-    let productsCalledAbout = [];
-    let notesSubject;
-    let callResolution;
-    let isOutOfScope;
-    let comments;
-
     let ticketCreated = "` No Ticket Created `";
     const successString = "Success. Ready To Submit To Slack!";
     const successSlack = "Submitted To Slack!";
@@ -123,7 +115,7 @@
                 if ($(item).is(':checked')) { formValues.products.push(` ${$(item).prop('id')}`); }
                 if ($(item).is(':checked') && $(item).prop('id') === 'Other') { formValues.comments = commentsBox.val(); }
             })
-            inputNameResolutionCheckboxes.each(function (item) {
+            inputNameResolutionCheckboxes.each(function (index, item) {
                 if ($(item).is(':checked') && $(item).prop('id') === 'resolvedCheckbox') { formValues.resolved = true; }
                 if ($(item).is(':checked') && $(item).prop('id') === 'scopeCheckbox') { formValues.oos = true; }
                 if ($(item).is(':checked') && $(item).prop('id') === 'ticketCheckbox') { formValues.escalationCreated = true; formValues.ticketNumber = escalationNumber.val(); }
@@ -133,10 +125,24 @@
             if (formValues.callerName === '') { formValues.callerName = 'Same as account name'; }
 
             // Formatting values.
-            results = `Customer #: ${formValues.customerNumber}\nCaller: ${formValues.callerName}\n\nProducts Related To Inquiry:${formValues.products.toString()}\n\nSituation: ${formValues.situation}\nResolved: ${formValues.resolved ? 'True' : 'False'}\nOut of Scope: ${formValues.oos ? 'True' : 'False'}\nComments: ${formValues.comments === '' ? 'N/A' : formValues.comments}`;
+            results = `Customer #: ${formValues.customerNumber}\nCaller: ${formValues.callerName}\n\nProducts Related To Inquiry:${formValues.products.toString()}\n\nSituation: ${formValues.situation}\nResolved: ${formValues.resolved ? 'True' : 'False'}\nOut of Scope: ${formValues.oos ? 'True' : 'False'}\nEscalation Created: ${formValues.escalationCreated ? `True - Ticket ${formValues.ticketNumber}` : 'False'}\nComments: ${formValues.comments === '' ? 'N/A' : formValues.comments}`;
 
             return results;
         }
+    })
+
+    //reset form values and variables
+    resetButton.on('click', function() {
+        inputNameProductsCalledAbout.each(function (index,item) { $(item).prop('checked',false).prop('disabled', false); })
+        inputNameResolutionCheckboxes.each(function (index,item) { $(item).prop('checked',false).prop('disabled', false); })
+        nameDifferntCheckbox.prop('checked',false);
+        customerBox.val('');
+        nameBox.val('').prop('disabled', true);
+        commentsBox.prop('disabled', true).val('');
+        escalationNumber.prop('disabled', true).val('').attr('hidden', 'hidden');
+        hiddenCommentsDiv.attr('hidden', 'hidden');
+        situationBox.val('');
+        resultsOutput.val('');        
     })
 
     /*
@@ -197,29 +203,6 @@
 
 
 
-    //reset form values and variables
-    // function handleReset() {
-    //     clearTimeout(timeoutModule);
-    //     $("input[type='checkbox']").prop('checked', false);
-    //     $("input[type='radio']").prop('checked', false);
-    //     $("input[type='text']").val('').attr('disabled', false);
-    //     $("#SubmitSlack").attr('disabled', 'disabled');
-    //     $("input[name='checkboxNA']").prop('checked', false).removeAttr('disabled');
-    //     $('#errorPTag').removeClass().attr('hidden', 'hidden').attr('class', 'uk-alert-danger uk-text-center uk-text-capitalize uk-margin-remove-vertical uk-margin-left uk-alert')
-    //     $('#mustDomain').attr('hidden', 'hidden');
-    //     $('#mustGuid').attr('hidden', 'hidden');
-    //     $("#parseButton").removeAttr('disabled');
-    //     $('input[type=checkbox]:disabled').removeAttr('disabled');
-    //     $("#errorP").html('');
-    //     demeanor = '';
-    //     understanding = '';
-    //     domains = '';
-    //     guid = '';
-    //     attributes = '';
-    //     training = '';
-    //     ticketCreated = "` No Ticket Created `";;
-    //     attrArray = [];
-    //     oppsArray = [];
-    // }
+    
 
 })($, DOMPurify);
