@@ -107,7 +107,6 @@
 
         function resultsFormatter() {
             let results;
-            let productsArray = [];
             let formValues = {
                 customerNumber: DOMPurify.sanitize(customerBox.val().trim()),
                 callerName: DOMPurify.sanitize(nameBox.val().trim()),
@@ -120,25 +119,22 @@
                 comments: '',
             }
             //loop through checkboxes for values.
-            inputNameProductsCalledAbout.each(function (item) {
-                if ($(item).is('checked')) { formValues.products.push($(item).id) }
-                if ($(item).is('checked') && $(item).id === 'Other') { formValues.comments = commentsBox.val(); }
+            inputNameProductsCalledAbout.each(function (index, item) {
+                if ($(item).is(':checked')) { formValues.products.push(` ${$(item).prop('id')}`); }
+                if ($(item).is(':checked') && $(item).prop('id') === 'Other') { formValues.comments = commentsBox.val(); }
             })
             inputNameResolutionCheckboxes.each(function (item) {
-                if ($(item).is('checked') && $(item).id === 'resolvedCheckbox') { formValues.resolved = true; }
-                if ($(item).is('checked') && $(item).id === 'scopeCheckbox') { formValues.oos = true; }
-                if ($(item).is('checked') && $(item).id === 'ticketCheckbox') { formValues.escalationCreated = true; formValues.ticketNumber = escalationNumber.val(); }
+                if ($(item).is(':checked') && $(item).prop('id') === 'resolvedCheckbox') { formValues.resolved = true; }
+                if ($(item).is(':checked') && $(item).prop('id') === 'scopeCheckbox') { formValues.oos = true; }
+                if ($(item).is(':checked') && $(item).prop('id') === 'ticketCheckbox') { formValues.escalationCreated = true; formValues.ticketNumber = escalationNumber.val(); }
             })
-
-            // setting object with array values.
-            formValues.products = productsArray;
 
             // Catching if no name provided.
             if (formValues.callerName === '') { formValues.callerName = 'Same as account name'; }
 
             // Formatting values.
-            results = `Customer #: ${formValues.customerNumber}\nCaller: ${formValues.callerName}\n\nProducts Related To Inquiry: ${formValues.products}\n\nSituation: ${formValues.situation}\nResolved: ${formValues.resolved ? 'True' : 'False'}\nOut of Scope: ${formValues.oos ? 'True' : 'False'}\nComments: ${formValues.comments === '' ? 'N/A' : formValues.comments}`;
-            console.log()
+            results = `Customer #: ${formValues.customerNumber}\nCaller: ${formValues.callerName}\n\nProducts Related To Inquiry:${formValues.products.toString()}\n\nSituation: ${formValues.situation}\nResolved: ${formValues.resolved ? 'True' : 'False'}\nOut of Scope: ${formValues.oos ? 'True' : 'False'}\nComments: ${formValues.comments === '' ? 'N/A' : formValues.comments}`;
+
             return results;
         }
     })
