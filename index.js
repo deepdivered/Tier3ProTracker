@@ -71,10 +71,7 @@
         |--------------------------------------------------------------------------
         | Function Declaration Block. 
         |--------------------------------------------------------------------------
-        */
-
-
-        //Check for errors before enabling slack submission
+        *///Check for errors before enabling slack submission
         function areThereFormErrors() {
             if (DOMPurify.sanitize(customerBox.val().trim()) === "") { return "Enter a valid customer number"; }
             if (nameDifferntCheckbox.is(':checked') && DOMPurify.sanitize(nameBox.val().trim()) === "") { return "Must enter caller name or alias"; }
@@ -102,6 +99,7 @@
             SubmitSlack.prop('disabled',false)
         }
 
+        //Format the results from the from into a clean output for notes section. 
         function resultsFormatter() {
             let results;
             let formValues = {
@@ -115,15 +113,16 @@
                 ticketNumber: '',
                 comments: '',
             }
-            //loop through checkboxes for values.
+            //loop through topics checkboxes for values.
             inputNameProductsCalledAbout.each(function (index, item) {
                 if ($(item).is(':checked')) { formValues.products.push(` ${$(item).prop('id')}`); }
-                if ($(item).is(':checked') && $(item).prop('id') === 'Other') { formValues.comments = commentsBox.val(); }
+                if ($(item).is(':checked') && $(item).prop('id') === 'Other') { formValues.comments = DOMPurify.sanitize(commentsBox.val().trim()); }
             })
+            //Loop through the resolution checkboxes. 
             inputNameResolutionCheckboxes.each(function (index, item) {
                 if ($(item).is(':checked') && $(item).prop('id') === 'resolvedCheckbox') { formValues.resolved = true; }
                 if ($(item).is(':checked') && $(item).prop('id') === 'scopeCheckbox') { formValues.oos = true; }
-                if ($(item).is(':checked') && $(item).prop('id') === 'ticketCheckbox') { formValues.escalationCreated = true; formValues.ticketNumber = escalationNumber.val(); }
+                if ($(item).is(':checked') && $(item).prop('id') === 'ticketCheckbox') { formValues.escalationCreated = true; formValues.ticketNumber = DOMPurify.sanitize(escalationNumber.val().trim()); }
             })
 
             // Catching if no name provided.
@@ -136,6 +135,25 @@
             return results;
         }
     })
+
+    /*
+    |--------------------------------------------------------------------------
+    | Submit To Slack function Handled with click event. 
+    |--------------------------------------------------------------------------
+    | For slack configuration please view the API documentation for Incoming Webhooks
+    | https://godaddy.slack.com/apps/A0F7XDUAZ-incoming-webhooks?page=1
+    */
+    SubmitSlack.on('click',function () {
+        console.log(`here is the object to work with in slack function. ${JSON.stringify(finalFormValuesToSlack)}`)
+        SubmitSlack.prop('disabled', true);
+        parseButton.prop('disabled', true);
+    })
+
+    /*
+    |--------------------------------------------------------------------------
+    | Event Handlers and form reset function
+    |--------------------------------------------------------------------------
+    */
 
     //reset form values and variables
     resetButton.on('click', function() {
@@ -156,21 +174,6 @@
         parseButton.prop('disabled', false);
     })
 
-    // Slack button enabler and submitter.
-    SubmitSlack.on('click',function () {
-        console.log(`here is the object to work with in slack function. ${JSON.stringify(finalFormValuesToSlack)}`)
-        SubmitSlack.prop('disabled', true);
-        parseButton.prop('disabled', true);
-    })
-
-    /*
-    |--------------------------------------------------------------------------
-    | Event Handlers and form reset function
-    |--------------------------------------------------------------------------
-    | For slack configuration please view the API documentation for Incoming Webhooks
-    | https://godaddy.slack.com/apps/A0F7XDUAZ-incoming-webhooks?page=1
-    */
-
     // This listener will fire if the user chooses to enter a caller name manually.
     nameDifferntCheckbox.on('change', function () {
         if (nameDifferntCheckbox.is(':checked')) {
@@ -180,6 +183,7 @@
         }
     })
 
+    //This listener is if a ticket was created. Allows ticket number input.
     ticketCheckbox.on('change', function () {
         if (ticketCheckbox.is(':checked')) {
             escalationNumber.prop('disabled', false).removeAttr('hidden');
@@ -218,4 +222,4 @@
             Other.prop('disabled', false);
         }
     })
-})($, DOMPurify);
+})($, DOMPurify);// Dom purify should be used to sanitize all fields. Passing Jquery in with $.
