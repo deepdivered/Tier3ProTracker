@@ -10,6 +10,9 @@
     // Whole-script strict mode syntax
     'use strict';
 
+    // Contains the final form values that will be used to send to slack.
+    let finalFormValuesToSlack;
+
     let ticketCreated = "` No Ticket Created `";
     const successString = "Success. Ready To Submit To Slack!";
     const successSlack = "Submitted To Slack!";
@@ -49,6 +52,7 @@
 
     // Output
     const resultsOutput = $('#resultsOutput');
+    const hiddenResultsArea = $('#hiddenResultsArea');
 
     /*
     |--------------------------------------------------------------------------
@@ -95,6 +99,7 @@
         //Parse from inputs and show note template
         function processOutput() {
             resultsOutput.val(resultsFormatter())
+            SubmitSlack.prop('disabled',false)
         }
 
         function resultsFormatter() {
@@ -126,7 +131,8 @@
 
             // Formatting values.
             results = `Customer #: ${formValues.customerNumber}\nCaller: ${formValues.callerName}\n\nProducts Related To Inquiry:${formValues.products.toString()}\n\nSituation: ${formValues.situation}\nResolved: ${formValues.resolved ? 'True' : 'False'}\nOut of Scope: ${formValues.oos ? 'True' : 'False'}\nEscalation Created: ${formValues.escalationCreated ? `True - Ticket ${formValues.ticketNumber}` : 'False'}\nComments: ${formValues.comments === '' ? 'N/A' : formValues.comments}`;
-
+            finalFormValuesToSlack = formValues;
+            hiddenResultsArea.removeAttr("hidden");
             return results;
         }
     })
@@ -142,7 +148,19 @@
         escalationNumber.prop('disabled', true).val('').attr('hidden', 'hidden');
         hiddenCommentsDiv.attr('hidden', 'hidden');
         situationBox.val('');
-        resultsOutput.val('');        
+        
+        finalFormValuesToSlack = '';
+        SubmitSlack.prop('disabled',true)
+        hiddenResultsArea.attr('hidden', 'hidden')     
+        resultsOutput.val('');
+        parseButton.prop('disabled', false);
+    })
+
+    // Slack button enabler and submitter.
+    SubmitSlack.on('click',function () {
+        console.log(`here is the object to work with in slack function. ${JSON.stringify(finalFormValuesToSlack)}`)
+        SubmitSlack.prop('disabled', true);
+        parseButton.prop('disabled', true);
     })
 
     /*
@@ -200,9 +218,4 @@
             Other.prop('disabled', false);
         }
     })
-
-
-
-    
-
 })($, DOMPurify);
