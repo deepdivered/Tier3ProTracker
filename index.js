@@ -93,7 +93,7 @@
             if (error !== false) {
                 $("#errorPTag").removeAttr("hidden");
                 $("#errorP").html(error);
-                timeoutModule = setTimeout(() => {
+                setTimeout(() => {
                     $("#errorPTag").attr('hidden', 'hidden');
                     $("#errorP").html('');
                 }, 3000);
@@ -111,8 +111,8 @@
             let formValues = {
                 customerNumber: DOMPurify.sanitize(customerBox.val().trim()),
                 callerName: DOMPurify.sanitize(nameBox.val().trim()),
-                products: '',
-                situation: '',
+                products: [],
+                situation: DOMPurify.sanitize(situationBox.val().trim()),
                 resolved: false,
                 oos: false,
                 escalationCreated: false,
@@ -120,14 +120,14 @@
                 comments: '',
             }
             //loop through checkboxes for values.
-            inputNameProductsCalledAbout.each(function () {
-                if (this.is('checked')) { productsArray.push(this.id) }
-                if (this.is('checked') && this.id === 'Other') { formValues.comments = commentsBox.val(); }
+            inputNameProductsCalledAbout.each(function (item) {
+                if ($(item).is('checked')) { formValues.products.push($(item).id) }
+                if ($(item).is('checked') && $(item).id === 'Other') { formValues.comments = commentsBox.val(); }
             })
-            inputNameResolutionCheckboxes.each(function () {
-                if (this.is('checked') && this.id === 'resolvedCheckbox') { formValues.resolved = true; }
-                if (this.is('checked') && this.id === 'scopeCheckbox') { formValues.oos = true; }
-                if (this.is('checked') && this.id === 'ticketCheckbox') { formValues.escalationCreated = true; formValues.ticketNumber = escalationNumber.val(); }
+            inputNameResolutionCheckboxes.each(function (item) {
+                if ($(item).is('checked') && $(item).id === 'resolvedCheckbox') { formValues.resolved = true; }
+                if ($(item).is('checked') && $(item).id === 'scopeCheckbox') { formValues.oos = true; }
+                if ($(item).is('checked') && $(item).id === 'ticketCheckbox') { formValues.escalationCreated = true; formValues.ticketNumber = escalationNumber.val(); }
             })
 
             // setting object with array values.
@@ -135,31 +135,12 @@
 
             // Catching if no name provided.
             if (formValues.callerName === '') { formValues.callerName = 'Same as account name'; }
+
+            // Formatting values.
+            results = `Customer #: ${formValues.customerNumber}\nCaller: ${formValues.callerName}\n\nProducts Related To Inquiry: ${formValues.products}\n\nSituation: ${formValues.situation}\nResolved: ${formValues.resolved ? 'True' : 'False'}\nOut of Scope: ${formValues.oos ? 'True' : 'False'}\nComments: ${formValues.comments === '' ? 'N/A' : formValues.comments}`;
+            console.log()
             return results;
         }
-
-        // Customer #
-        // Caller:
-
-        // Product (check boxes)
-        // 1. Domains  2. Hosting 3. Email 4. Websites 5. Security 6. Business Tools 7. other (see comments)
-
-        // Issue:
-        // Resolved: y/n (checkboxes)  escalation required: y/n (checkboxes)
-        // Out of Scope:  y/n (checkboxes)
-        // Comments: (only if other product is checked)      
-
-
-        //Adds backticks ` for formatting in Slack
-        // function formatValues() {
-        //     domains = "` " + domains + " `";
-        //     guid = "` " + guid + " `";
-        //     attributes = "`" + attrArray + "`";
-        //     training = "`" + oppsArray + "`";
-        // }
-
-        //received error string
-
     })
 
     /*
