@@ -306,11 +306,24 @@
                     Feedback</a>
                 <div class="uk-accordion-content">
                     <div class="uk-card uk-card-default uk-card-body uk-background-muted">
-                        <h3 class="uk-card-title">Feedback</h3>
+                        <div class="uk-text-center" uk-grid>
+                            <div class="uk-width-auto@m">
+                                <h3 class="uk-card-title">Feedback</h3>
+                            </div>
+
+                            <div class="uk-width-expand@m">
+                                <div class="uk-alert-danger" uk-alert>
+                                    <span>NO PERSONAL INFORMATION. NO DOMAINS, CUSTOMER #'S OR NAMES IN THIS
+                                        FEEDBACK.</span>
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
-                            <label><input class="uk-radio" type="radio" name="experienceRadios" checked> Positive</label>
-                            <label><input class="uk-radio" type="radio" name="experienceRadios"> Negative</label>
+                            <label><input class="uk-radio" type="radio" name="experienceRadios" id="experiencePositive"
+                                    checked> Positive</label>
+                            <label><input class="uk-radio" type="radio" name="experienceRadios" id="experienceNegative">
+                                Negative</label>
                         </div>
 
                         <div class="uk-margin">
@@ -325,13 +338,20 @@
                         <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
                             <label><input name="tagChecks" class="uk-checkbox" id="bugs" type="checkbox"> bugs</label>
                             <label><input name="tagChecks" class="uk-checkbox" id="ui/ux" type="checkbox"> ui/ux</label>
-                            <label><input name="tagChecks" class="uk-checkbox" id="rewards" type="checkbox"> rewards</label>
-                            <label><input name="tagChecks" class="uk-checkbox" id="support" type="checkbox"> support</label>
-                            <label><input name="tagChecks" class="uk-checkbox" id="usefulness" type="checkbox"> usefulness</label>
-                            <label><input name="tagChecks" class="uk-checkbox" id="ease of use" type="checkbox"> ease of use</label>
-                            <label><input name="tagChecks" class="uk-checkbox" id="knowledge base" type="checkbox"> knowledge base</label>
-                            <label><input name="tagChecks" class="uk-checkbox" id="white-labeling" type="checkbox"> white-labeling</label>
-                            <label><input name="tagChecks" class="uk-checkbox" id="business tools" type="checkbox"> business tools</label>
+                            <label><input name="tagChecks" class="uk-checkbox" id="rewards" type="checkbox">
+                                rewards</label>
+                            <label><input name="tagChecks" class="uk-checkbox" id="support" type="checkbox">
+                                support</label>
+                            <label><input name="tagChecks" class="uk-checkbox" id="usefulness" type="checkbox">
+                                usefulness</label>
+                            <label><input name="tagChecks" class="uk-checkbox" id="ease of use" type="checkbox"> ease of
+                                use</label>
+                            <label><input name="tagChecks" class="uk-checkbox" id="knowledge base" type="checkbox">
+                                knowledge base</label>
+                            <label><input name="tagChecks" class="uk-checkbox" id="white-labeling" type="checkbox">
+                                white-labeling</label>
+                            <label><input name="tagChecks" class="uk-checkbox" id="business tools" type="checkbox">
+                                business tools</label>
                         </div>
                         <button id="proFeedbackSubmit" class="uk-button uk-button-primary">Submit Feedback</button>
                     </div>
