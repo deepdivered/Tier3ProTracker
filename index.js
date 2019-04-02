@@ -61,19 +61,11 @@
     let timeoutModule;
 
     // Pro Feeback Elements
-    let bugs = $('bugs');
-    let uiux = $('uiux');
-    let rewards = $('rewards');
-    let support = $('support');
-    let usefulness = $('usefulness');
-    let easeOfUse = $('easeOfUse');
-    let knowledgeBase = $('knowledgeBase');
-    let whiteLabeling = $('whiteLabeling');
-    let businessTools = $('businessToolsTag');
-    let experiencePositive = $('experiencePositive');
-    let experienceNegative = $('experienceNegative');
-    let feedbackComments = $('feedbackComments');
-    let proFeedbackSubmit = $('proFeedbackSubmit');
+    const experiencePositive = $('#experiencePositive');
+    const experienceNegative = $('#experienceNegative');
+    const feedbackComments = $('#feedbackComments');
+    const proFeedbackSubmit = $('#proFeedbackSubmit');
+    const feedbackTagsCheckboxes = $("input[name='tagChecks']");
 
     /*
     |--------------------------------------------------------------------------
@@ -262,4 +254,30 @@
     | API stored in variable 
     |--------------------------------------------------------------------------
     */
+    proFeedbackSubmit.on('click', function () {
+        let feedbackFormValues = {
+            tags: [],
+            text: '',
+            positive: false
+        };
+        feedbackTagsCheckboxes.each(function (index, item) {
+            if ($(item).is(':checked')) { feedbackFormValues.tags.push($(item).attr('data-attr')); }
+        })
+        feedbackFormValues.text = DOMPurify.sanitize(feedbackComments.val().trim())
+        if (feedbackFormValues.text === '') { feedbackFormValues.text = "N/A" }
+        if (experiencePositive.is(":checked")) {
+            feedbackFormValues.positive = true;
+        } else if (experienceNegative.is(":checked")) {
+            feedbackFormValues.positive = false;
+        }
+        sendToFeedbackApi(feedbackFormValues);
+        proFeedbackSubmit.attr('disabled','disabled');
+        function sendToFeedbackApi(feedback) {
+            $.ajax({ data: JSON.stringify({ text: feedback.text, tags: feedback.tags, positive: feedback.positive }), dataType: 'json', processData: false, method: 'POST', 'url': feedbackApiUrl }).done(function () {
+                
+            })
+        }
+    })
+
+
 })($, DOMPurify);// Dom purify should be used to sanitize all fields. Passing Jquery in with $.
