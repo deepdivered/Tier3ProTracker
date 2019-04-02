@@ -66,6 +66,8 @@
     const feedbackComments = $('#feedbackComments');
     const proFeedbackSubmit = $('#proFeedbackSubmit');
     const feedbackTagsCheckboxes = $("input[name='tagChecks']");
+    const feedbackAccordion = $("#feedbackAccordion");
+    const buttonProvideFeedback = $('#buttonProvideFeedback');
 
     /*
     |--------------------------------------------------------------------------
@@ -197,6 +199,14 @@
         resultsOutput.val('');
         parseButton.prop('disabled', false);
         clearTimeout(timeoutModule);
+
+        //feedback elements
+        feedbackAccordion.removeClass('uk-open');
+        proFeedbackSubmit.removeAttr('disabled');
+        experiencePositive.prop('checked', true);
+        experienceNegative.prop('checked', false);
+        feedbackComments.val('');
+        feedbackTagsCheckboxes.each(function (index, item) { $(item).prop('checked', false) })
     })
 
     // This listener will fire if the user chooses to enter a caller name manually.
@@ -251,7 +261,8 @@
     /*
     |--------------------------------------------------------------------------
     | Click listener on the proFeedbackSubmit button. Will process inputs and send to DB API.
-    | API stored in variable 
+    | API stored in variable.
+    | Also handles the regular button buttonProvideFeedback
     |--------------------------------------------------------------------------
     */
     proFeedbackSubmit.on('click', function () {
@@ -271,11 +282,31 @@
             feedbackFormValues.positive = false;
         }
         sendToFeedbackApi(feedbackFormValues);
-        proFeedbackSubmit.attr('disabled','disabled');
+        proFeedbackSubmit.attr('disabled', 'disabled');
         function sendToFeedbackApi(feedback) {
-            $.ajax({ data: JSON.stringify({ text: feedback.text, tags: feedback.tags, positive: feedback.positive }), dataType: 'json', processData: false, method: 'POST', 'url': feedbackApiUrl }).done(function () {
-                
+            $.ajax({
+                data: JSON.stringify({
+                    text: feedback.text,
+                    tags: feedback.tags,
+                    positive: feedback.positive
+                }),
+                dataType: 'json',
+                processData: false,
+                method: 'POST',
+                url: feedbackApiUrl
+            }).fail(function (xhr, tstats, errorThrown) {
+                console.log(`request has failed. ${errorThrown}`)
+            }).done(function () {
+                console.log('request is successful')
             })
+        }
+    })
+
+    buttonProvideFeedback.on('click', function () {
+        if (feedbackAccordion.classList.contains('uk-open')) {
+            feedbackAccordion.removeClass('uk-open');
+        } else {
+            feedbackAccordion.addClass('uk-open');
         }
     })
 

@@ -287,6 +287,8 @@
                     <button id="resetButton" class="uk-button uk-button-default">Reset / Clear</button>
                     <button id="SubmitSlack" class="uk-button uk-button-danger" disabled="disabled">Submit To
                         Slack</button>
+                    <button id="buttonProvideFeedback" class="uk-button uk-button-secondary">Provide Pro
+                        Feedback</button>
                 </div>
             </div>
             <!-- Parse and reset buttons need to be outside of form -->
@@ -301,7 +303,7 @@
         </div>
 
         <ul uk-accordion>
-            <li>
+            <li id="feedbackAccordion">
                 <a class="uk-accordion-title uk-text-center uk-text-lead uk-alert-primary" href="#">Provide Pro
                     Feedback</a>
                 <div class="uk-accordion-content">
@@ -336,21 +338,30 @@
 
 
                         <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
-                            <label><input name="tagChecks" data-attr="bugs" class="uk-checkbox" id="bugs" type="checkbox"> bugs</label>
-                            <label><input name="tagChecks" data-attr="ui/ux" class="uk-checkbox" id="uiux" type="checkbox"> ui/ux</label>
-                            <label><input name="tagChecks" data-attr="rewards" class="uk-checkbox" id="rewards" type="checkbox">
+                            <label><input name="tagChecks" data-attr="bugs" class="uk-checkbox" id="bugs"
+                                    type="checkbox"> bugs</label>
+                            <label><input name="tagChecks" data-attr="ui/ux" class="uk-checkbox" id="uiux"
+                                    type="checkbox"> ui/ux</label>
+                            <label><input name="tagChecks" data-attr="rewards" class="uk-checkbox" id="rewards"
+                                    type="checkbox">
                                 rewards</label>
-                            <label><input name="tagChecks" data-attr="support" class="uk-checkbox" id="support" type="checkbox">
+                            <label><input name="tagChecks" data-attr="support" class="uk-checkbox" id="support"
+                                    type="checkbox">
                                 support</label>
-                            <label><input name="tagChecks" data-attr="usefulness" class="uk-checkbox" id="usefulness" type="checkbox">
+                            <label><input name="tagChecks" data-attr="usefulness" class="uk-checkbox" id="usefulness"
+                                    type="checkbox">
                                 usefulness</label>
-                            <label><input name="tagChecks" data-attr="ease of use" class="uk-checkbox" id="easeOfUse" type="checkbox"> ease of
+                            <label><input name="tagChecks" data-attr="ease of use" class="uk-checkbox" id="easeOfUse"
+                                    type="checkbox"> ease of
                                 use</label>
-                            <label><input name="tagChecks" data-attr="knowledge base" class="uk-checkbox" id="knowledgeBase" type="checkbox">
+                            <label><input name="tagChecks" data-attr="knowledge base" class="uk-checkbox"
+                                    id="knowledgeBase" type="checkbox">
                                 knowledge base</label>
-                            <label><input name="tagChecks" data-attr="white-lebeling" class="uk-checkbox" id="whiteLabeling" type="checkbox">
+                            <label><input name="tagChecks" data-attr="white-lebeling" class="uk-checkbox"
+                                    id="whiteLabeling" type="checkbox">
                                 white-labeling</label>
-                            <label><input name="tagChecks" data-attr="business tools" class="uk-checkbox" id="businessToolsTag" type="checkbox">
+                            <label><input name="tagChecks" data-attr="business tools" class="uk-checkbox"
+                                    id="businessToolsTag" type="checkbox">
                                 business tools</label>
                         </div>
                         <button id="proFeedbackSubmit" class="uk-button uk-button-primary">Submit Feedback</button>
