@@ -10,9 +10,10 @@
     // Whole-script strict mode syntax
     'use strict';
 
-    // Contains Slack API Url. Should NOT be on Git
+    // API URLS HERE. Do Not Commit.
 
     // let slackApiUrl = "EXAMPLEAPIHERE";
+    // let feedbackApiUrl = "EXAMPLEAPIHERE";
 
     // Contains the final form values that will be used to send to slack.
     let finalFormValuesToSlack;
@@ -59,6 +60,21 @@
     const slackUsername = "Pro Pilot Call Tracker";
     let timeoutModule;
 
+    // Pro Feeback Elements
+    let bugs = $('bugs');
+    let uiux = $('uiux');
+    let rewards = $('rewards');
+    let support = $('support');
+    let usefulness = $('usefulness');
+    let easeOfUse = $('easeOfUse');
+    let knowledgeBase = $('knowledgeBase');
+    let whiteLabeling = $('whiteLabeling');
+    let businessTools = $('businessToolsTag');
+    let experiencePositive = $('experiencePositive');
+    let experienceNegative = $('experienceNegative');
+    let feedbackComments = $('feedbackComments');
+    let proFeedbackSubmit = $('proFeedbackSubmit');
+
     /*
     |--------------------------------------------------------------------------
     | Click listener on the parse button handles form inputs logic
@@ -101,7 +117,7 @@
         //Parse from inputs and show note template
         function processOutput() {
             resultsOutput.val(resultsFormatter())
-            SubmitSlack.prop('disabled',false)
+            SubmitSlack.prop('disabled', false)
         }
 
         //Format the results from the from into a clean output for notes section. 
@@ -148,19 +164,19 @@
     | For slack configuration please view the API documentation for Incoming Webhooks
     | https://godaddy.slack.com/apps/A0F7XDUAZ-incoming-webhooks?page=1
     */
-    SubmitSlack.on('click',function () {
+    SubmitSlack.on('click', function () {
         console.log(`here is the object to work with in slack function. ${JSON.stringify(finalFormValuesToSlack)}`)
         SubmitSlack.prop('disabled', true);
         parseButton.prop('disabled', true);
-        
+
         let text = `#### Pro Pilot Call Tracker ####\nCaller Name: \`${finalFormValuesToSlack.callerName}\`\nProducts Related To Inquiry: \`${finalFormValuesToSlack.products.toString()}\`\nSituation: \`\`\`${finalFormValuesToSlack.situation}\`\`\`\n\nResolved: \`${finalFormValuesToSlack.resolved ? 'True' : 'False'}\`\nOut of Scope: \`${finalFormValuesToSlack.oos ? 'True' : 'False'}\`\nEscalation Created: \`${finalFormValuesToSlack.escalationCreated ? `True - Ticket ${finalFormValuesToSlack.ticketNumber}` : 'False'}\`\nComments: \`${finalFormValuesToSlack.comments === '' ? 'N/A' : finalFormValuesToSlack.comments}\``;
 
-        $.ajax({ data: 'payload=' + JSON.stringify({ "text": text, "icon_url":slackIconUrl, "username":slackUsername}), dataType: 'json', processData: false, type: 'POST', 'url':slackApiUrl });
-        
+        $.ajax({ data: 'payload=' + JSON.stringify({ "text": text, "icon_url": slackIconUrl, "username": slackUsername }), dataType: 'json', processData: false, type: 'POST', 'url': slackApiUrl });
+
         $("#errorPTag").removeAttr('hidden').removeClass('uk-alert-success').addClass('uk-alert-primary');
         $("#errorP").html(successSlack);
         timeoutModule = setTimeout(() => {
-            $("#errorPTag").attr('hidden', 'hidden').removeClass('uk-alert-primary').addClass('uk-alert-danger') 
+            $("#errorPTag").attr('hidden', 'hidden').removeClass('uk-alert-primary').addClass('uk-alert-danger')
             $("#errorP").html('');
         }, 15000);
     })
@@ -172,20 +188,20 @@
     */
 
     //reset form values and variables
-    resetButton.on('click', function() {
-        inputNameProductsCalledAbout.each(function (index,item) { $(item).prop('checked',false).prop('disabled', false); })
-        inputNameResolutionCheckboxes.each(function (index,item) { $(item).prop('checked',false).prop('disabled', false); })
-        nameDifferntCheckbox.prop('checked',false);
+    resetButton.on('click', function () {
+        inputNameProductsCalledAbout.each(function (index, item) { $(item).prop('checked', false).prop('disabled', false); })
+        inputNameResolutionCheckboxes.each(function (index, item) { $(item).prop('checked', false).prop('disabled', false); })
+        nameDifferntCheckbox.prop('checked', false);
         customerBox.val('');
         nameBox.val('').prop('disabled', true);
         commentsBox.prop('disabled', true).val('');
         escalationNumber.prop('disabled', true).val('').attr('hidden', 'hidden');
         hiddenCommentsDiv.attr('hidden', 'hidden');
         situationBox.val('');
-        
+
         finalFormValuesToSlack = '';
-        SubmitSlack.prop('disabled',true)
-        hiddenResultsArea.attr('hidden', 'hidden')     
+        SubmitSlack.prop('disabled', true)
+        hiddenResultsArea.attr('hidden', 'hidden')
         resultsOutput.val('');
         parseButton.prop('disabled', false);
         clearTimeout(timeoutModule);
@@ -239,4 +255,11 @@
             Other.prop('disabled', false);
         }
     })
+
+    /*
+    |--------------------------------------------------------------------------
+    | Click listener on the proFeedbackSubmit button. Will process inputs and send to DB API.
+    | API stored in variable 
+    |--------------------------------------------------------------------------
+    */
 })($, DOMPurify);// Dom purify should be used to sanitize all fields. Passing Jquery in with $.
