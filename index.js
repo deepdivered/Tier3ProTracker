@@ -6,12 +6,12 @@
 |
 | Used By Tier 3 Agents To Capture Call Data.
 */
-; (PACT3 = ($, DOMPurify) => {
+; (PACT3 = ($, DOMPurify, UIkit) => {
     // Whole-script strict mode syntax
     'use strict';
 
     // API URLS HERE. Do Not Commit.
-
+  
     // let slackApiUrl = "EXAMPLEAPIHERE";
     // let feedbackApiUrl = "EXAMPLEAPIHERE";
 
@@ -199,9 +199,13 @@
         resultsOutput.val('');
         parseButton.prop('disabled', false);
         clearTimeout(timeoutModule);
+        $("#errorPTag").attr('hidden', 'hidden').removeClass('uk-alert-primary').addClass('uk-alert-danger');
+        $("#errorP").html('');
 
         //feedback elements
-        feedbackAccordion.removeClass('uk-open');
+        if (feedbackAccordion.hasClass('uk-open')) {
+            UIkit.accordion('#jsaccordion').toggle(0, true);
+        }
         proFeedbackSubmit.removeAttr('disabled');
         experiencePositive.prop('checked', true);
         experienceNegative.prop('checked', false);
@@ -284,31 +288,25 @@
         sendToFeedbackApi(feedbackFormValues);
         proFeedbackSubmit.attr('disabled', 'disabled');
         function sendToFeedbackApi(feedback) {
-            $.ajax({
-                data: JSON.stringify({
-                    text: feedback.text,
-                    tags: feedback.tags,
-                    positive: feedback.positive
-                }),
-                dataType: 'json',
-                processData: false,
+            //console.log({ text: feedback.text, tags: feedback.tags, positive: feedback.positive })
+            //console.log(JSON.stringify({ text: feedback.text, tags: feedback.tags, positive: feedbackFormValues.positive }))
+            let parsedData = JSON.stringify({ text: feedback.text, tags: feedback.tags, positive: feedbackFormValues.positive })
+            fetch(feedbackApiUrl, {
                 method: 'POST',
-                url: feedbackApiUrl
-            }).fail(function (xhr, tstats, errorThrown) {
-                console.log(`request has failed. ${errorThrown}`)
-            }).done(function () {
-                console.log('request is successful')
-            })
+                mode: 'cors',
+                body: {"text":"aawdawdawd","tags":["bugs","ui/ux"],"positive":true},
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(res => res.json())
+            .then(response => console.log('Success:', JSON.stringify(response)))
+            .catch(error => console.error('Error:', error));
         }
     })
 
     buttonProvideFeedback.on('click', function () {
-        if (feedbackAccordion.classList.contains('uk-open')) {
-            feedbackAccordion.removeClass('uk-open');
-        } else {
-            feedbackAccordion.addClass('uk-open');
-        }
+        UIkit.accordion('#jsaccordion').toggle(0, true);
     })
 
 
-})($, DOMPurify);// Dom purify should be used to sanitize all fields. Passing Jquery in with $.
+})($, DOMPurify, UIkit);// Dom purify should be used to sanitize all fields. Passing Jquery in with $.
