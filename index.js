@@ -295,18 +295,31 @@
             let parsedData = JSON.stringify({ text: feedback.text, tags: feedback.tags, positive: feedbackFormValues.positive })
             fetch(feedbackApiUrl, {
                 method: 'POST',
-                mode: 'no-cors',
+                mode: 'cors',
                 body: parsedData,
                 headers: {
                     'Content-Type': 'application/json'
                 }
             }).catch(error => console.error('Error:', error))
+            
         }
     })
 
     buttonProvideFeedback.on('click', function () {
         UIkit.accordion('#jsaccordion').toggle(0, true);
     })
+
+    function handlerFetchErrors(response) {
+        if (!response.ok) {
+            $("#errorPTag").removeAttr("hidden");
+                $("#errorP").html(response.statusText);
+                timeoutModule = setTimeout(() => {
+                    $("#errorPTag").attr('hidden', 'hidden');
+                    $("#errorP").html('');
+                }, 12000);
+        }
+        return response;
+    }
 
 
 })($, DOMPurify, UIkit, self.window.webObj);// Dom purify should be used to sanitize all fields. Passing Jquery in with $.
