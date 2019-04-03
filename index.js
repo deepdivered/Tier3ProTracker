@@ -6,12 +6,14 @@
 |
 | Used By Tier 3 Agents To Capture Call Data.
 */
-; (PACT3 = ($, DOMPurify, UIkit) => {
+
+
+; (PACT3 = ($, DOMPurify, UIkit, web) => {
     // Whole-script strict mode syntax
     'use strict';
-
+    console.log(web)
     // API URLS HERE. Do Not Commit.
-  
+
     // let slackApiUrl = "EXAMPLEAPIHERE";
     // let feedbackApiUrl = "EXAMPLEAPIHERE";
 
@@ -289,18 +291,16 @@
         proFeedbackSubmit.attr('disabled', 'disabled');
         function sendToFeedbackApi(feedback) {
             //console.log({ text: feedback.text, tags: feedback.tags, positive: feedback.positive })
-            //console.log(JSON.stringify({ text: feedback.text, tags: feedback.tags, positive: feedbackFormValues.positive }))
+            console.log(JSON.stringify({ text: feedback.text, tags: feedback.tags, positive: feedbackFormValues.positive }))
             let parsedData = JSON.stringify({ text: feedback.text, tags: feedback.tags, positive: feedbackFormValues.positive })
             fetch(feedbackApiUrl, {
                 method: 'POST',
-                mode: 'cors',
-                body: {"text":"aawdawdawd","tags":["bugs","ui/ux"],"positive":true},
+                mode: 'no-cors',
+                body: parsedData,
                 headers: {
                     'Content-Type': 'application/json'
                 }
-            }).then(res => res.json())
-            .then(response => console.log('Success:', JSON.stringify(response)))
-            .catch(error => console.error('Error:', error));
+            }).catch(error => console.error('Error:', error))
         }
     })
 
@@ -309,4 +309,4 @@
     })
 
 
-})($, DOMPurify, UIkit);// Dom purify should be used to sanitize all fields. Passing Jquery in with $.
+})($, DOMPurify, UIkit, self.window.webObj);// Dom purify should be used to sanitize all fields. Passing Jquery in with $.
