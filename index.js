@@ -288,7 +288,7 @@
         proFeedbackSubmit.attr('disabled', 'disabled');
         function sendToFeedbackApi(feedback) {
             //console.log({ text: feedback.text, tags: feedback.tags, positive: feedback.positive })
-            console.log(JSON.stringify({ text: feedback.text, tags: feedback.tags, positive: feedbackFormValues.positive }))
+            //console.log(JSON.stringify({ text: feedback.text, tags: feedback.tags, positive: feedbackFormValues.positive }))
             let parsedData = JSON.stringify({ text: feedback.text, tags: feedback.tags, positive: feedbackFormValues.positive })
             fetch(feedbackApiUrl, {
                 method: 'POST',
