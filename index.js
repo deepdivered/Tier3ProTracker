@@ -8,14 +8,14 @@
 */
 
 
-; (PACT3 = ($, DOMPurify, UIkit, web) => {
+; (PACT3 = ($, DOMPurify, UIkit) => {
     // Whole-script strict mode syntax
     'use strict';
-    console.log(web)
     // API URLS HERE. Do Not Commit.
 
-    // let slackApiUrl = "EXAMPLEAPIHERE";
-    // let feedbackApiUrl = "EXAMPLEAPIHERE";
+
+    // const slackApiUrl = "EXAMPLEAPIHERE";
+    // const feedbackApiUrl = "EXAMPLEAPIHERE";
 
     // Contains the final form values that will be used to send to slack.
     let finalFormValuesToSlack;
@@ -59,7 +59,6 @@
     const resultsOutput = $('#resultsOutput');
     const hiddenResultsArea = $('#hiddenResultsArea');
     const slackIconUrl = "https://s3-us-west-2.amazonaws.com/slack-files2/bot_icons/2019-03-27/591799331895_48.png";
-    const slackUsername = "Pro Pilot Call Tracker";
     let timeoutModule;
 
     // Pro Feeback Elements
@@ -166,9 +165,7 @@
         parseButton.prop('disabled', true);
 
         let text = `#### Pro Pilot Call Tracker ####\nCaller Name: \`${finalFormValuesToSlack.callerName}\`\nProducts Related To Inquiry: \`${finalFormValuesToSlack.products.toString()}\`\nSituation: \`\`\`${finalFormValuesToSlack.situation}\`\`\`\n\nResolved: \`${finalFormValuesToSlack.resolved ? 'True' : 'False'}\`\nOut of Scope: \`${finalFormValuesToSlack.oos ? 'True' : 'False'}\`\nEscalation Created: \`${finalFormValuesToSlack.escalationCreated ? `True - Ticket ${finalFormValuesToSlack.ticketNumber}` : 'False'}\`\nComments: \`${finalFormValuesToSlack.comments === '' ? 'N/A' : finalFormValuesToSlack.comments}\``;
-
         $.ajax({ data: 'payload=' + JSON.stringify({ "text": text, "icon_url": slackIconUrl, "username": slackUsername }), dataType: 'json', processData: false, type: 'POST', 'url': slackApiUrl });
-
         $("#errorPTag").removeAttr('hidden').removeClass('uk-alert-success').addClass('uk-alert-primary');
         $("#errorP").html(successSlack);
         timeoutModule = setTimeout(() => {
@@ -300,8 +297,8 @@
                 headers: {
                     'Content-Type': 'application/json'
                 }
-            }).catch(error => console.error('Error:', error))
-            
+            }).then(handleFetchErrors)
+                .catch(error => console.error('Error:', error))
         }
     })
 
@@ -309,17 +306,17 @@
         UIkit.accordion('#jsaccordion').toggle(0, true);
     })
 
-    function handlerFetchErrors(response) {
+    function handleFetchErrors(response) {
         if (!response.ok) {
             $("#errorPTag").removeAttr("hidden");
-                $("#errorP").html(response.statusText);
-                timeoutModule = setTimeout(() => {
-                    $("#errorPTag").attr('hidden', 'hidden');
-                    $("#errorP").html('');
-                }, 12000);
+            $("#errorP").html(response.statusText);
+            timeoutModule = setTimeout(() => {
+                $("#errorPTag").attr('hidden', 'hidden');
+                $("#errorP").html('');
+            }, 12000);
         }
         return response;
     }
 
 
-})($, DOMPurify, UIkit, self.window.webObj);// Dom purify should be used to sanitize all fields. Passing Jquery in with $.
+})($, DOMPurify, UIkit);// Dom purify should be used to sanitize all fields. Passing Jquery in with $.
