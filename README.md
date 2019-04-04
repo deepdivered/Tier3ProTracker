@@ -1,5 +1,7 @@
 # Tier3ProTracker
 
+![Pro Tracker](/ProTrackerSS.png?raw=true "Pro Tracker")
+
 ### Tracker Installation Note
 The tracker is enclosed within an `Immediately Invoked Function Expression` or `IIFE`
 
