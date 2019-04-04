@@ -18,13 +18,13 @@ The `index.js` file is by default lacking two private API URLs. The `feedbackApi
 6. All Done!
 
 ## Version 1.0 Features Vs Planned Features
- [X] Parse provided call data for notes template generation.
+- [X] Parse provided call data for notes template generation.
  
- [X] Submit to tracker Slack channel.
+- [X] Submit to tracker Slack channel.
  
- [X] Submits feedback to Database through feedback API.
+- [X] Submits feedback to Database through feedback API.
  
- [ ] Live parsing of agent data. (remove parse button)
+- [ ] Live parsing of agent data. (remove parse button)
  
- [ ] Convert from Webhook to Slackbot. (refactor into node)
+- [ ] Convert from Webhook to Slackbot. (refactor into node)
 
