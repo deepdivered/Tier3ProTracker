@@ -165,7 +165,7 @@
         parseButton.prop('disabled', true);
 
         let text = `#### Pro Pilot Call Tracker ####\nCaller Name: \`${finalFormValuesToSlack.callerName}\`\nProducts Related To Inquiry: \`${finalFormValuesToSlack.products.toString()}\`\nSituation: \`\`\`${finalFormValuesToSlack.situation}\`\`\`\n\nResolved: \`${finalFormValuesToSlack.resolved ? 'True' : 'False'}\`\nOut of Scope: \`${finalFormValuesToSlack.oos ? 'True' : 'False'}\`\nEscalation Created: \`${finalFormValuesToSlack.escalationCreated ? `True - Ticket ${finalFormValuesToSlack.ticketNumber}` : 'False'}\`\nComments: \`${finalFormValuesToSlack.comments === '' ? 'N/A' : finalFormValuesToSlack.comments}\``;
-        $.ajax({ data: 'payload=' + JSON.stringify({ "text": text, "icon_url": slackIconUrl, "username": slackUsername }), dataType: 'json', processData: false, type: 'POST', 'url': slackApiUrl });
+        $.ajax({ data: 'payload=' + JSON.stringify({ "text": text, "icon_url": slackIconUrl}), dataType: 'json', processData: false, type: 'POST', 'url': slackApiUrl });
         $("#errorPTag").removeAttr('hidden').removeClass('uk-alert-success').addClass('uk-alert-primary');
         $("#errorP").html(successSlack);
         timeoutModule = setTimeout(() => {
