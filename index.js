@@ -191,6 +191,7 @@
         escalationNumber.prop('disabled', true).val('').attr('hidden', 'hidden');
         hiddenCommentsDiv.attr('hidden', 'hidden');
         situationBox.val('');
+        document.getElementById("resolvedCheckbox").checked = true;
 
         finalFormValuesToSlack = '';
         SubmitSlack.prop('disabled', true)
