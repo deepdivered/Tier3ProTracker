@@ -209,6 +209,7 @@
         experiencePositive.prop('checked', true);
         experienceNegative.prop('checked', false);
         feedbackComments.val('');
+        aha.val('');
         feedbackTagsCheckboxes.each(function (index, item) { $(item).prop('checked', false) })
     })
 
@@ -272,6 +273,7 @@
         let feedbackFormValues = {
             tags: [],
             text: '',
+            aha: '',
             positive: false
         };
         feedbackTagsCheckboxes.each(function (index, item) {
@@ -279,6 +281,8 @@
         })
         feedbackFormValues.text = DOMPurify.sanitize(feedbackComments.val().trim())
         if (feedbackFormValues.text === '') { feedbackFormValues.text = "N/A" }
+        feedbackFormValues.aha = DOMPurify.sanitize(aha.val().trim())
+        if (feedbackFormValues.aha === '') { feedbackFormValues.aha = "N/A" }
         if (experiencePositive.is(":checked")) {
             feedbackFormValues.positive = true;
         } else if (experienceNegative.is(":checked")) {
