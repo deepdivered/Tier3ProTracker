@@ -65,6 +65,7 @@
     const experiencePositive = $('#experiencePositive');
     const experienceNegative = $('#experienceNegative');
     const feedbackComments = $('#feedbackComments');
+    const aha = $('#aha');
     const proFeedbackSubmit = $('#proFeedbackSubmit');
     const feedbackTagsCheckboxes = $("input[name='tagChecks']");
     const feedbackAccordion = $("#feedbackAccordion");
