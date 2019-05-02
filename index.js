@@ -94,7 +94,11 @@
             if (DOMPurify.sanitize(situationBox.val().trim()) === "" || situationBox.val().length <= 7) { return "Describe the situation. At least a sentence or two."; }
             if (Other.is(':checked') && DOMPurify.sanitize(commentsBox.val().trim()) === "") { return "Enter comments about the topic."; }
             if (ticketCheckbox.is(':checked') && DOMPurify.sanitize(escalationNumber.val().trim()) === "") { return "Enter ticket number." }
-            if (inputNameProductsCalledAbout.not(':checked')) { return "Must select a topic"; }
+            let elementsCheck = 0;
+            for ( x in listofallelements){
+            if (x.is(':checked')) {  elementsChecked++}
+            }
+             If(elementsChecked === 0) { return Must select a topic }
             return false;
         }
 
